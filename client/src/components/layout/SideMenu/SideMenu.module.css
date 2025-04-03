@@ -1,0 +1,45 @@
+.sideMenu {
+  width: 275px;
+  position: relative;
+}
+
+.sideMenuContent {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  left: 0;
+  width: 100%;
+}
+
+.menuItem {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px;
+  border-bottom-left-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.menuItem:hover {
+  background-color: hsla(0, 0%, 100%, 0.086);
+}
+
+.menuItemLabel {
+  margin: 0 20px;
+  font-size: var(--lFontSize);
+  color: var(--white);
+}
+
+.menuItemLabel.active {
+  font-weight: var(--fontWeightBold);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  padding-left: 12px;
+}

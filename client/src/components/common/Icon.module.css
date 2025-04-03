@@ -1,0 +1,25 @@
+i.icon {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  mask-repeat: no-repeat;
+  vertical-align: middle;
+  text-align: center;
+  mask-size: 100%;
+}
+
+i.white {
+  background-color: var(--white);
+}
+
+i.black {
+  background-color: var(--black);
+}
+
+i.primary {
+  background-color: var(--primary);
+}
+
+i.danger {
+  background-color: var(--error)
+}

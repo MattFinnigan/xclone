@@ -1,0 +1,17 @@
+:root {
+  --grey-400: rgb(113, 118, 123);
+  --white: #ffffff;
+  --black: #1c1b1b;
+
+  --borderColour: rgb(47, 51, 54);
+  --background: rgb(0, 0, 0);
+  --scrollbarColour: rgb(62, 65, 68) rgb(22, 24, 28);
+
+  --primary: rgb(29, 155, 240);
+  --secondary: rgb(29, 155, 240);
+  --error: #FF3D71;
+
+  --textColour: rgba(231, 233, 234, 1.00);
+  --textColourGrey: rgb(113, 118, 123);
+  --linkColour: var(--primary);
+}

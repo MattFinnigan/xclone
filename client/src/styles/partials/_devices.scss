@@ -1,0 +1,54 @@
+@mixin device ($device, $orientation) {
+  @if ($device == 'phone') {
+    @include phone($orientation) {
+      @content;
+    }
+  } @else if ($device == 'tablet') {
+    @include tablet($orientation) {
+      @content;
+    }
+  } @else if ($device == 'desktop') {
+    @include desktop {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+@mixin phone ($orientation) {
+  @if ($orientation == 'portrait') {
+    @media only screen and (max-width: 767px) and (orientation: portrait) {
+      @content;
+    }
+  } @else if ($orientation == 'landscape') {
+    @media only screen and (max-width: 767px) and (orientation: landscape) {
+      @content;
+    }
+  } @else  {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  }
+}
+
+@mixin tablet ($orientation) {
+  @if ($orientation == 'portrait') {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+      @content;
+    }
+  } @else if ($orientation == 'landscape') {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+      @content;
+    }
+  } @else {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      @content;
+    }
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: 1024px) {
+    @content;
+  }
+}

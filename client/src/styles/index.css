@@ -1,0 +1,111 @@
+@import url('./partials/colours.css');
+@import url('./partials/typography.css');
+
+/* reset */
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* Start styles */
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--textColour);
+  background-color: var(--background);
+  scrollbar-color: var(--scrollbarColour);
+  font-size: var(--mFontSize);
+  font-weight: var(--fontWeightRegular);
+  line-height: 1.5;
+  font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+small {
+  font-size: var(--sFontSize);
+}
+
+a {
+  color: var(--linkColour);
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+button,
+a.button {
+  padding: 0.4em 1em;
+  margin: 5px;
+  border-radius: 0.5em;
+  font-size: var(--mFontSize);
+  border: none;
+  text-decoration: none;
+}

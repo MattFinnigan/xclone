@@ -1,0 +1,7 @@
+.page {
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  min-height: 100vh;
+
+  height: 120vh;
+}

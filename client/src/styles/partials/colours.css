@@ -11,6 +11,7 @@
   --secondary: rgb(29, 155, 240);
   --error: #FF3D71;
 
+  --overlayColour: rgba(91, 112, 131, 0.4);
   --textColour: rgba(231, 233, 234, 1.00);
   --textColourGrey: rgb(113, 118, 123);
   --linkColour: var(--primary);

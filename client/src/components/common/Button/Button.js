@@ -1,6 +1,6 @@
 import styles from './Button.module.css'
 
-function Button({ link, size, type, width, colour, onClick, children }) {
+function Button({ link, size, type, width, colour, onClick, disabled, children }) {
   const buttonStyles = [
     styles.button,
     styles[size],
@@ -15,8 +15,8 @@ function Button({ link, size, type, width, colour, onClick, children }) {
             <span>{children}</span>
           </a>
         ) : (
-          <button className={buttonStyles} onClick={onClick} style={{ width: width }}>
-            <span>{children}</span>
+          <button type={type} className={buttonStyles} onClick={onClick} disabled={disabled} style={{ width: width }}>
+            <div>{children}</div>
           </button>
         )
       }

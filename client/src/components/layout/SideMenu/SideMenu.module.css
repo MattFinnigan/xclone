@@ -43,3 +43,68 @@
   padding-top: 12px;
   padding-left: 12px;
 }
+
+.profileButton {
+  margin-top: 12px;
+  position: relative;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+  margin-right: 12px;
+  font-size: var(--mFontSize);
+  text-align: left;
+}
+
+.userName {
+  font-weight: var(--fontWeightBold);
+  color: var(--white);
+}
+
+.userHandle {
+  color: var(--textColourGrey);
+}
+
+.dots {
+  font-size: var(--lFontSize);
+  font-weight: var(--fontWeightBold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+}
+
+.logoutContain {
+  transition: all 0.2s ease-in-out;
+  padding: 12px 0;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 105%;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
+  z-index: 100;
+  border-radius: 1em;
+  background-color: var(--background);
+}

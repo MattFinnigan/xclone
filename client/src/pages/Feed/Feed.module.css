@@ -1,0 +1,32 @@
+.feedOptions {
+  display: flex;
+  position: sticky;
+  border-bottom: 1px solid var(--borderColour);
+}
+
+.feedOptionButton {
+  flex: 50%;
+  text-align: center;
+  position: relative;
+}
+
+.buttonText {
+  font-size: var(--mFontSize);
+  text-align: center;
+  color: var(--textColourGrey);
+}
+
+.buttonText.active {
+  color: var(--textColour);
+  font-weight: var(--fontWeightBold);
+}
+
+.underline {
+  height: 4px;
+  background-color: var(--primary);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  border-radius: 1em;
+}

@@ -67,12 +67,12 @@ const apiPost = (url, data) => {
     })
   })
 }
-// auth
 
+// auth
 export const checkAuth = () => {
   return new Promise((resolve, reject) => {
     if (!localStorage.getItem('userId')) {
-      return reject()
+      return
     }
     apiGet('/api/auth/check/' + localStorage.getItem('userId')).then((response) => {
       resolve(response.user)
@@ -105,13 +105,23 @@ export const login = (email, password) => {
   })
 }
 
-export const getAllUsers = () => {
+// posts
+export const createPost = (data) => {
   return new Promise((resolve, reject) => {
-    apiGet('/api/users/list').then((response) => {
-      resolve(response.data)
+    apiPost('/api/posts', data).then((response) => {
+      resolve(response)
     }).catch((error) => {
       reject(error)
     })
   })
 }
 
+export const getPosts = () => {
+  return new Promise((resolve, reject) => {
+    apiGet('/api/posts').then((response) => {
+      resolve(response.posts)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}

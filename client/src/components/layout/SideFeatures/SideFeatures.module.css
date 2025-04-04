@@ -1,5 +1,16 @@
 .sideFeatures {
   width: 350px;
+  padding: 0 20px;
+}
 
-  height: 110vh;
+.sideBarContent {
+  padding: 0 16px;
+  border: 1px solid var(--borderColour);
+  border-radius: 1em;
+  margin-bottom: 16px;
+}
+
+.heading {
+  font-weight: var(--fontWeightBolder);
+  padding: 12px 0;
 }

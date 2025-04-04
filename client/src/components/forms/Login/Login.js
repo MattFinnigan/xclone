@@ -1,7 +1,7 @@
 import styles from './Login.module.css'
 import { useState } from 'react'
 import { login } from '../../../utils/api'
-import Modal from '../Modal'
+import Modal from '../../modals/Modal'
 import Input from '../../common/Input/Input'
 import Button from '../../common/Button/Button'
 
@@ -25,7 +25,6 @@ function Login({ onSuccess }) {
       setSubmitting(false)
       onSuccess(user)
     }).catch((error) => {
-      setError(error.response.data.message)
       setSubmitting(false)
       console.error(error)
     })
@@ -39,13 +38,13 @@ function Login({ onSuccess }) {
           <form className={styles.form} onSubmit={handleSubmit}>
             <Input
               type="text"
-              placeholder="Email address or username"
+              placeholderLabel="Email address or username"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null) }}
               required={true} />
             <Input
               type="password"
-              placeholder="Password (please don't reuse!)"
+              placeholderLabel="Password (please don't reuse!)"
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(null) }}
               required={true} />

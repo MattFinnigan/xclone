@@ -16,6 +16,10 @@ i.black {
   background-color: var(--black);
 }
 
+i.grey {
+  background-color: var(--grey);
+}
+
 i.primary {
   background-color: var(--primary);
 }

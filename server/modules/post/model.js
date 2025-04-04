@@ -1,34 +1,25 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../configs/db')
 
-const User = sequelize.define('User', {
+const Post = sequelize.define('Post', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
     autoIncrement: true
   },
-  email: {
+  content: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: false
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  name: {
-    type: DataTypes.STRING,
-    defaultValue: 'John Doe'
-  },
-  handle: {
-    type: DataTypes.STRING,
+  user_id: {
+    type: DataTypes.INTEGER,
     allowNull: true,
-    unique: true
-  },
-  avatar: {
-    type: DataTypes.STRING,
-    allowNull: true
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -41,11 +32,11 @@ const User = sequelize.define('User', {
     defaultValue: DataTypes.NOW
   }
 })
-User.associate = (models) => {
-  User.hasMany(models.Post, {
+Post.associate = (models) => {
+  Post.belongsTo(models.User, {
     foreignKey: 'user_id',
-    as: 'posts'
+    as: 'user'
   })
 }
 
-module.exports = User
+module.exports = Post

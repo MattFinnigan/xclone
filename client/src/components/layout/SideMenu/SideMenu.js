@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { logout } from '../../../utils/helpers'
 import styles from './SideMenu.module.css'
 import Icon from '../../common/Icon/Icon'
 import Button from '../../common/Button/Button'
@@ -10,13 +12,21 @@ function SideMenu() {
   const dispatch = useModalDispatch()
   const currentUser = useCurrentUser()
   const isLoggedIn = currentUser && currentUser.id
-
+  const [showLogout, setShowLogout] = useState(false)
   const showLoginModal = () => {
     dispatch('LOGIN_MODAL')
   }
 
+  const handleLogout = () => {
+    logout()
+  }
+
   return (
-    <div className={styles.sideMenu}>
+    <div className={styles.sideMenu} onClick={() => {
+      if (showLogout) {
+        setShowLogout(false)
+      }
+    }}>
       <div className={styles.sideMenuHeader}>
         <div className={styles.logoContainer}>
           <Icon name="logo" size="2.5em" maskSize="26px" colour="white" />
@@ -52,7 +62,27 @@ function SideMenu() {
             <Button size='large' colour='white' width='90%'>
               Post
             </Button>
-            <p>Logged in as: {currentUser.email}</p>
+            <div className={styles.profileButton}>
+              <Button size='large' colour='transparent' onClick={() => setShowLogout(!showLogout)}>
+                <div className={styles.userContainer}>
+                  <div className={styles.imageContainer}>
+                    <img src={`/images/avatars/${currentUser.avatar || 'default.png'}`} alt="avatar" className={styles.avatar} />
+                  </div>
+                  <div className={styles.userInfo}>
+                    <div className={styles.userName}>{currentUser.name}</div>
+                    <div className={styles.userHandle}>{currentUser.handle}</div>
+                  </div>
+                  <div className={styles.dots}>...</div>
+                </div>
+              </Button>
+              {showLogout && (
+                <div className={styles.logoutContain}>
+                  <Button size='md' type='listitem' colour='transparent' width='100%' onClick={handleLogout}>
+                    Logout {currentUser.handle}
+                  </Button>
+                </div>
+              )}
+            </div>
           </>
         )
         }

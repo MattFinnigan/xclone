@@ -1,0 +1,23 @@
+.login {
+  max-width: 364px;
+  margin: 0 auto;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 48px;
+}
+
+.buttonWrapper {
+  margin: 24px 0;
+}
+
+.signUp {
+  margin-top: 40px;
+  color: var(--textColourGrey);
+}
+
+.error {
+  color: var(--error);
+  font-size: var(--sFontSize);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

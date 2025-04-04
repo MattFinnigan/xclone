@@ -8,6 +8,8 @@ import App from './App'
 import Feed from './pages/Feed/Feed.js'
 import { ModalProvider } from './context/ModalContext'
 import { CurrentRouteProvider } from './context/RouteContext'
+import { CurrentUserProvider } from './context/CurrentUserContext'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -21,7 +23,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
+  <CurrentUserProvider>
     <ModalProvider>
       <CurrentRouteProvider>
         <App>
@@ -29,7 +31,7 @@ root.render(
         </App>
       </CurrentRouteProvider>
     </ModalProvider>
-  </React.StrictMode >
+  </CurrentUserProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

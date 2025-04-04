@@ -1,9 +1,20 @@
 import styles from './SideMenu.module.css'
-import Icon from '../../common/Icon'
+import Icon from '../../common/Icon/Icon'
+import Button from '../../common/Button/Button'
 import { useCurrentRoute } from '../../../context/RouteContext'
+import { useModalDispatch } from '../../../context/ModalContext'
+import { useCurrentUser } from '../../../context/CurrentUserContext'
 
 function SideMenu() {
   const activeItem = useCurrentRoute()
+  const dispatch = useModalDispatch()
+  const currentUser = useCurrentUser()
+  const isLoggedIn = currentUser && currentUser.id
+
+  const showLoginModal = () => {
+    dispatch('LOGIN_MODAL')
+  }
+
   return (
     <div className={styles.sideMenu}>
       <div className={styles.sideMenuHeader}>
@@ -32,6 +43,20 @@ function SideMenu() {
           <div><Icon name="profile" size="1.7em" maskSize="26px" colour="white" /></div>
           <div className={[styles.menuItemLabel, activeItem === '/profile' && styles.active].join(' ')}>Profile</div>
         </a>
+        {!isLoggedIn ? (
+          <Button size='large' colour='white' width='90%' onClick={() => showLoginModal()}>
+            Login
+          </Button>
+        ) : (
+          <>
+            <Button size='large' colour='white' width='90%'>
+              Post
+            </Button>
+            <p>Logged in as: {currentUser.email}</p>
+          </>
+        )
+        }
+
       </div>
     </div>
   )

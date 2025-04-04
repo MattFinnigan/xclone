@@ -1,6 +1,6 @@
 .page {
-  border-left: 1px solid white;
-  border-right: 1px solid white;
+  border-left: 1px solid var(--borderColour);
+  border-right: 1px solid var(--borderColour);
   min-height: 100vh;
 
   height: 120vh;

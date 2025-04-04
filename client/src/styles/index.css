@@ -94,6 +94,7 @@ small {
 
 a {
   color: var(--linkColour);
+  text-decoration: none;
 }
 
 a:hover {
@@ -108,4 +109,10 @@ a.button {
   font-size: var(--mFontSize);
   border: none;
   text-decoration: none;
+}
+
+h1 {
+  font-size: var(--xlFontSize);
+  font-weight: var(--fontWeightBold);
+  margin: 20px 0;
 }

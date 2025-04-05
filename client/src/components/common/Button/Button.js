@@ -11,9 +11,9 @@ function Button({ link, size, type, width, colour, onClick, disabled, children }
     <>
       {
         link ? (
-          <a href={link} className={buttonStyles} onClick={onClick} style={{ width: width }}>
-            <span>{children}</span>
-          </a>
+          <button className={[buttonStyles, styles.link]} onClick={onClick} disabled={disabled} style={{ width: width }}>
+            <div>{children}</div>
+          </button>
         ) : (
           <button type={type} className={buttonStyles} onClick={onClick} disabled={disabled} style={{ width: width }}>
             <div>{children}</div>

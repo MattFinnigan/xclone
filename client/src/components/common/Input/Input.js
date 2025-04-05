@@ -37,10 +37,10 @@ function Input({ value, required, type, placeholder, placeholderLabel, icon, onC
           value={value}
           required={required}
           onChange={handleChange}
-          className={[styles.input, styles[size], styles[styling]].join(' ')}
+          className={[styles.input, styles[size], styles[styling], placeholderLabel && styles.inputWithPlaceholder].join(' ')}
           placeholder={placeholder || placeholderLabel} />
       )}
-      {placeholder && (
+      {placeholderLabel && (
         <label className={styles.placeholderLabel}>
           {placeholderLabel}
         </label>

@@ -10,7 +10,7 @@
   width: 100%;
   margin: 10px 0;
   min-height: 40px;
-  resize: none;
+
 }
 
 .input.inputWithPlaceholder {
@@ -45,7 +45,7 @@
   position: relative;
 }
 
-.placeholder {
+.placeholderLabel {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -62,15 +62,15 @@
   color: transparent;
 }
 
-.input:focus+.placeholder,
-.input:not(:placeholder-shown)+.placeholder {
+.input:focus+.placeholderLabel,
+.input:not(:placeholder-shown)+.placeholderLabel {
   top: 22px;
   left: 8px;
   transform: translateY(-50%);
   font-size: var(--sFontSize);
 }
 
-.input:focus+.placeholder {
+.input:focus+.placeholderLabel {
   color: var(--linkColour);
 }
 

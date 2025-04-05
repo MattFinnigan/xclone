@@ -4,6 +4,21 @@ const jwt = require('jsonwebtoken')
 const userService = require('../user/service')
 const verifyToken = require('../../middleware/auth')
 
+router.post('/register', (req, res) => {
+  const { name, email, password } = req.body
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Name, email, and password are required' })
+  }
+  userService.createUser({ name, email, password }).then((user) => {
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '5s' })
+    delete user.password
+    res.json({ token, userId: user.id, user })
+    return user
+  }).catch((error) => {
+    res.status(500).json({ error: error.message })
+  })
+})
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body
   if (!email || !password) {

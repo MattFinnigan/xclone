@@ -1,6 +1,3 @@
-const Sequelize = require('sequelize')
-const sequelize = require('../configs/db')
-
 const User = require('./user/model')
 const Post = require('./post/model')
 

@@ -22,7 +22,7 @@ function Modal({ header, content }) {
                   <Icon name="close" size="20px" maskSize="20px" colour="white" />
                 </Button>
               </div>
-              <Icon name="logo" size="26px" maskSize="26px" colour="white" />
+              <Icon name="logo" size="32px" maskSize="32px" colour="white" />
             </>
           }
         </div>

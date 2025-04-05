@@ -14,9 +14,9 @@ function Feed() {
   const isLoggedIn = currentUser !== null
 
   useEffect(() => {
+    setLoading(true)
     getPosts().then((resp) => {
       setPosts(resp.data)
-      setLoading(false)
     }).catch((error) => {
       console.error('Error fetching posts:', error)
     }).finally(() => {
@@ -25,6 +25,8 @@ function Feed() {
   }, [])
   return (
     <Page>
+      {loading && 'loading'}
+      {posts && posts.length}
       <div className={styles.feedContainer}>
         <div className={styles.feedOptions}>
           <div className={styles.feedOptionButton}>

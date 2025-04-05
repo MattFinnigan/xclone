@@ -1,21 +1,17 @@
-import styles from './Login.module.css'
+import styles from './Register.module.css'
 import { useState } from 'react'
-import { login } from '../../../utils/api'
+import { register } from '../../../utils/api'
 import Modal from '../../modals/Modal'
 import Input from '../../common/Input/Input'
 import Button from '../../common/Button/Button'
-import { useModalDispatch } from '../../../context/ModalContext'
 
-function Login({ onSuccess }) {
-  const [email, setEmail] = useState('matt@test.com')
-  const [password, setPassword] = useState('testing123')
+function Register({ onSuccess }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
-  const modalDispatch = useModalDispatch()
-
-  const handleSignup = () => {
-    modalDispatch('SIGNUP_MODAL')
-  }
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleSubmit = (event) => {
     if (event) {
@@ -24,24 +20,35 @@ function Login({ onSuccess }) {
     if (submitting || error) {
       return
     }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
     setSubmitting(true)
     setError(null)
 
-    login(email, password).then((user) => {
+    register(name, email, password).then((user) => {
       setSubmitting(false)
       onSuccess(user)
     }).catch((error) => {
       setSubmitting(false)
+      console.error(error)
       setError(error.response?.data?.message || 'An error occurred')
     })
   }
   return (
     <Modal
       content={
-        <div className={styles.login}>
-          <h1>Sign in to X</h1>
+        <div className={styles.register}>
+          <h1>Create your account</h1>
           {error && <p className={styles.error}>{error}</p>}
           <form className={styles.form} onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              placeholderLabel="Name"
+              value={name}
+              onChange={(e) => { setName(e.target.value); setError(null) }}
+              required={true} />
             <Input
               type="email"
               placeholderLabel="Email address"
@@ -54,21 +61,20 @@ function Login({ onSuccess }) {
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(null) }}
               required={true} />
+            <Input
+              type="password"
+              placeholderLabel="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => { setConfirmPassword(e.target.value); setError(null) }}
+              required={true} />
             <div className={styles.buttonWrapper}>
-              <Button type="submit" colour="white" size="md" width="100%" disabled={submitting}>Login</Button>
+              <Button type="submit" colour="white" size="large" width="100%" disabled={submitting}>Submit</Button>
             </div>
           </form>
-          <div className={styles.buttonWrapper}>
-            <Button type="submit" colour="black" size="md" width="100%">Forgot Password?</Button>
-          </div>
-          <p className={styles.signUp}>
-            Don't have an account?&nbsp;
-            <Button type="link" onClick={handleSignup}>Sign up</Button>
-          </p>
         </div>
       }
     />
   )
 }
 
-export default Login
+export default Register

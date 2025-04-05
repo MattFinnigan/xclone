@@ -105,6 +105,19 @@ export const login = (email, password) => {
   })
 }
 
+export const register = (name, email, password) => {
+  return new Promise((resolve, reject) => {
+    apiPost('/api/auth/register', { name, email, password }).then((response) => {
+      localStorage.setItem('token', response.token)
+      localStorage.setItem('userId', response.userId)
+      api.defaults.headers['Authorization'] = response.token
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
 // posts
 export const createPost = (data) => {
   return new Promise((resolve, reject) => {
@@ -119,7 +132,7 @@ export const createPost = (data) => {
 export const getPosts = () => {
   return new Promise((resolve, reject) => {
     apiGet('/api/posts').then((response) => {
-      resolve(response.posts)
+      resolve(response)
     }).catch((error) => {
       reject(error)
     })

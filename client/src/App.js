@@ -6,6 +6,7 @@ import Login from './components/forms/Login/Login.js'
 import SideMenu from './components/layout/SideMenu/SideMenu.js'
 import SideFeatures from './components/layout/SideFeatures/SideFeatures.js'
 import { useEffect } from 'react'
+import Register from './components/forms/Register/Register.js'
 
 function App({ children }) {
   const modalState = useModal()
@@ -21,6 +22,8 @@ function App({ children }) {
   const renderModal = () => {
     if (modalState === 'LOGIN_MODAL') {
       return <Login onSuccess={(user) => loginSuccess(user)} />
+    } else if (modalState === 'SIGNUP_MODAL') {
+      return <Register onSuccess={(user) => loginSuccess(user)} />
     }
   }
 

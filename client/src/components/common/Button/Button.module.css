@@ -101,3 +101,15 @@ button:disabled {
   font-weight: var(--fontWeightBolder);
   min-height: 24px;
 }
+
+.button.link {
+  background-color: transparent;
+  color: var(--primary);
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+.button.link:hover {
+  text-decoration: underline;
+}

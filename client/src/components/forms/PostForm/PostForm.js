@@ -6,10 +6,11 @@ import Button from '../../common/Button/Button.js'
 import Icon from '../../common/Icon/Icon.js'
 import { createPost } from '../../../utils/api'
 
-function PostForm() {
+function PostForm({ onSuccess }) {
   const currentUser = useCurrentUser()
   const [postContent, setPostContent] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [focusing, setFocusing] = useState(false)
 
   const handlePostSubmit = (e) => {
     e.preventDefault()
@@ -17,9 +18,11 @@ function PostForm() {
       return
     }
     setSubmitting(true)
-    createPost({ content: postContent, user_id: currentUser.id }).then(() => {
+    createPost({ content: postContent, user_id: currentUser.id }).then((res) => {
       setSubmitting(false)
       setPostContent('')
+      setFocusing(false)
+      onSuccess(res.data)
     }).catch((error) => {
       setSubmitting(false)
       console.error(error)
@@ -38,13 +41,16 @@ function PostForm() {
             styling="bare"
             placeholder="What's happening?"
             value={postContent}
+            onFocus={() => setFocusing(true)}
             onChange={(e) => setPostContent(e.target.value)} />
-          <div className={styles.replyOptions}>
-            <Button colour="primary-alt" type="bare" size="sm" onClick={() => { }}>
-              <Icon name="globe" size="16px" maskSize="16px" colour="primary" />
-              &nbsp;&nbsp;Everyone can reply
-            </Button>
-          </div>
+          {focusing && (
+            <div className={styles.replyOptions}>
+              <Button colour="primary-alt" type="bare" size="sm" onClick={() => { }}>
+                <Icon name="globe" size="16px" maskSize="16px" colour="primary" />
+                &nbsp;&nbsp;Everyone can reply
+              </Button>
+            </div>
+          )}
           <div className={styles.buttonContainer}>
             <div></div>
             <div className={styles.postButton}>

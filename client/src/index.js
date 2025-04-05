@@ -9,6 +9,7 @@ import Feed from './pages/Feed/Feed.js'
 import { ModalProvider } from './context/ModalContext'
 import { CurrentRouteProvider } from './context/RouteContext'
 import { CurrentUserProvider } from './context/CurrentUserContext'
+import { CurrentPostsProvider } from './context/CurrentPostsContext.js'
 
 const router = createBrowserRouter([
   {
@@ -23,15 +24,17 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <CurrentUserProvider>
-    <ModalProvider>
-      <CurrentRouteProvider>
-        <App>
-          <RouterProvider router={router} />
-        </App>
-      </CurrentRouteProvider>
-    </ModalProvider>
-  </CurrentUserProvider>
+  <CurrentPostsProvider>
+    <CurrentUserProvider>
+      <ModalProvider>
+        <CurrentRouteProvider>
+          <App>
+            <RouterProvider router={router} />
+          </App>
+        </CurrentRouteProvider>
+      </ModalProvider>
+    </CurrentUserProvider>
+  </CurrentPostsProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

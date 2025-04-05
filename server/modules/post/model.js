@@ -23,13 +23,11 @@ const Post = sequelize.define('Post', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW
+    allowNull: false
   },
   updatedAt: {
     type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW
+    allowNull: false
   }
 })
 Post.associate = (models) => {

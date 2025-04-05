@@ -7,9 +7,7 @@ exports.addPost = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       message: 'Post created successfully.',
-      data: {
-        newPost
-      }
+      data: newPost
     })
   } catch (err) {
     console.error(err)
@@ -23,9 +21,7 @@ exports.getPosts = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       message: 'Posts retrieved successfully.',
-      data: {
-        posts
-      }
+      data: posts
     })
   } catch (err) {
     console.error(err)

@@ -1,32 +1,45 @@
+import { useEffect, useState } from 'react'
+import { useCurrentUser } from '../../context/CurrentUserContext.js'
+import { useCurrentPosts, useCurrentPostsDispatch } from '../../context/CurrentPostsContext.js'
+import { getPosts } from '../../utils/api.js'
 import styles from './Feed.module.css'
 import Page from '../Page.js'
 import Button from '../../components/common/Button/Button.js'
 import PostForm from '../../components/forms/PostForm/PostForm.js'
-import { useEffect, useState } from 'react'
-import { useCurrentUser } from '../../context/CurrentUserContext.js'
-import { getPosts } from '../../utils/api.js'
+import Spinner from '../../components/common/Spinner/Spinner.js'
+import Post from '../../components/Post/Post.js'
 
 function Feed() {
-  const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [feedOption, setFeedOption] = useState('forYou')
   const currentUser = useCurrentUser()
   const isLoggedIn = currentUser !== null
+  const currentPosts = useCurrentPosts()
+  const currentPostsDispatch = useCurrentPostsDispatch()
 
   useEffect(() => {
     setLoading(true)
     getPosts().then((resp) => {
-      setPosts(resp.data)
+      currentPostsDispatch(resp.data)
     }).catch((error) => {
       console.error('Error fetching posts:', error)
     }).finally(() => {
       setLoading(false)
     })
-  }, [])
+  }, [currentPostsDispatch])
+
+  const refreshPosts = () => {
+    setLoading(true)
+    getPosts().then((resp) => {
+      currentPostsDispatch(resp.data)
+    }).catch((error) => {
+      console.error('Error fetching posts:', error)
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
   return (
     <Page>
-      {loading && 'loading'}
-      {posts && posts.length}
       <div className={styles.feedContainer}>
         <div className={styles.feedOptions}>
           <div className={styles.feedOptionButton}>
@@ -42,8 +55,14 @@ function Feed() {
             {feedOption === 'following' && (<div className={styles.underline} style={{ width: '70px' }}></div>)}
           </div>
         </div>
-        {isLoggedIn && (<PostForm />)}
+        {isLoggedIn && (<PostForm onSuccess={refreshPosts} />)}
         <div className={styles.feedContent}>
+        </div>
+        <div className={styles.feedPosts}>
+          {loading && <Spinner />}
+          {!loading && currentPosts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
         </div>
       </div>
     </Page>

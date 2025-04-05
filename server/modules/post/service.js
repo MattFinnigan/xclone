@@ -10,7 +10,7 @@ exports.getPosts = () => {
     include: {
       model: User,
       attributes: ['id', 'name', 'avatar'],
-      as: 'user' // use this *only if* you used `as: 'user'` in your Post.associate
+      as: 'user'
     }
   })
 }

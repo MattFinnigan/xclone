@@ -3,7 +3,7 @@ import Icon from '../Icon/Icon'
 import { useEffect } from 'react'
 import autosize from 'autosize'
 
-function Input({ value, required, type, placeholder, placeholderLabel, icon, onChange, styling, size }) {
+function Input({ value, required, type, placeholder, placeholderLabel, icon, onChange, onFocus, onBlur, styling, size }) {
   useEffect(() => {
     if (type === 'textarea') {
       autosize(document.querySelector('textarea'))
@@ -30,7 +30,9 @@ function Input({ value, required, type, placeholder, placeholderLabel, icon, onC
           required={required}
           onChange={handleChange}
           className={[styles.input, styles[size], styles[styling]].join(' ')}
-          placeholder={placeholder || placeholderLabel} />
+          placeholder={placeholder || placeholderLabel}
+          onBlur={onBlur}
+          onFocus={onFocus} />
       ) : (
         <input
           type={type}
@@ -38,7 +40,9 @@ function Input({ value, required, type, placeholder, placeholderLabel, icon, onC
           required={required}
           onChange={handleChange}
           className={[styles.input, styles[size], styles[styling], placeholderLabel && styles.inputWithPlaceholder].join(' ')}
-          placeholder={placeholder || placeholderLabel} />
+          placeholder={placeholder || placeholderLabel}
+          onBlur={onBlur}
+          onFocus={onFocus} />
       )}
       {placeholderLabel && (
         <label className={styles.placeholderLabel}>

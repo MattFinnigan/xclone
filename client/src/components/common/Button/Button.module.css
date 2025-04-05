@@ -43,7 +43,7 @@ button:disabled {
 }
 
 .button.primary-alt:hover {
-  background-color: rgba(29, 156, 240, 0.105);
+  background-color: var(--primary-alt);
   transition: all 0.2s ease-in-out;
 }
 

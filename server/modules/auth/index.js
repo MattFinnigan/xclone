@@ -10,7 +10,7 @@ router.post('/register', (req, res) => {
     return res.status(400).json({ message: 'Name, email, and password are required' })
   }
   userService.createUser({ name, email, password }).then((user) => {
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '5s' })
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1hr' })
     delete user.password
     res.json({ token, userId: user.id, user })
     return user
@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
   }
   userService.getUserByEmail(email).then((user) => {
     if (user?.password === password) {
-      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '5s' })
+      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1hr' })
       delete user.password
       res.json({ token, userId: user.id, user })
     } else {
@@ -60,7 +60,7 @@ router.get('/renew/:id', (req, res) => {
   if (!req.params.id) {
     return res.status(400).json({ message: 'User ID is required' })
   }
-  const newToken = jwt.sign({ userId: req.params.id }, process.env.SECRET_KEY, { expiresIn: '5s' })
+  const newToken = jwt.sign({ userId: req.params.id }, process.env.SECRET_KEY, { expiresIn: '1hr' })
   res.json({ token: newToken, userId: req.params.id })
 })
 

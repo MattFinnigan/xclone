@@ -6,7 +6,7 @@ import Button from '../../common/Button/Button.js'
 import { createComment } from '../../../utils/api.js'
 import Post from '../../common/Post/Post.js'
 
-function CommentForm({ post, onSuccess }) {
+function CommentForm({ post, includePost, onSuccess }) {
   const currentUser = useCurrentUser()
   const [commentContent, setCommentContent] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -20,6 +20,7 @@ function CommentForm({ post, onSuccess }) {
     createComment({ content: commentContent, user_id: currentUser.id, post_id: post.id }).then((res) => {
       setSubmitting(false)
       setCommentContent('')
+      console.log(res.data)
       onSuccess(res.data)
     }).catch((error) => {
       setSubmitting(false)
@@ -28,7 +29,7 @@ function CommentForm({ post, onSuccess }) {
   }
   return (
     <div className={styles.commentFormContainer}>
-      <Post post={post} commenting={true} />
+      {includePost && <Post post={post} context="commenting" />}
       <div className={styles.commentForm}>
         <div className={styles.imageContainer}>
           <img src={`/images/avatars/${currentUser.avatar || 'default.png'}`} alt="avatar" />

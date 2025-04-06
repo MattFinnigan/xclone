@@ -61,7 +61,7 @@ function Feed() {
         <div className={styles.feedPosts}>
           {loading && <Spinner />}
           {!loading && currentPosts.map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} context="feed" />
           ))}
         </div>
       </div>

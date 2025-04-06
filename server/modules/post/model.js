@@ -47,6 +47,10 @@ Post.associate = (models) => {
     foreignKey: 'reposted_post_id',
     as: 'repostedPost'
   })
+  Post.hasMany(models.Comment, {
+    foreignKey: 'post_id',
+    as: 'comments'
+  })
 }
 
 module.exports = Post

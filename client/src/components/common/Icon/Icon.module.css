@@ -6,7 +6,7 @@ i.icon {
   vertical-align: middle;
   text-align: center;
   mask-size: 100%;
-  mask-position: center;
+  mask-position: center center;
 }
 
 i.white {

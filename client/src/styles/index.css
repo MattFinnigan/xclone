@@ -116,3 +116,8 @@ h1 {
   font-weight: var(--fontWeightBold);
   margin: 20px 0;
 }
+
+h2 {
+  font-size: var(--lFontSize);
+  font-weight: var(--fontWeightBold);
+}

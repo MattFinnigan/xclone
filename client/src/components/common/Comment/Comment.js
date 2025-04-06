@@ -20,47 +20,42 @@ function Comment({ comment }) {
       <div className={styles.commentContainer}>
         <div className={styles.commentHeader}>
           <div><strong>{comment.user.name}</strong> <span className={styles.greyText}>{comment.user.handle}</span></div>
-          <Button type="bare" size="small" colour="transparent" width="auto">...</Button>
+          <Button type="bare" colour="transparent" width="auto">...</Button>
         </div>
         <div className={styles.commentContent} dangerouslySetInnerHTML={{ __html: commentContent }}></div>
         <div className={styles.buttonContainer}>
           <div className={styles.button}>
             <Button
               type="icon"
-              size="small"
               colour="transparent"
               width="auto"
               highlight="primary-alt"
               onMouseEnter={() => { setHovering('comment') }}
               onMouseLeave={() => { setHovering(null) }}>
               <Icon name="comment" size="19px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
-              <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>10K</span>
             </Button>
           </div>
           <div className={styles.button}>
             <Button
               type="icon"
-              size="small"
               colour="transparent"
               width="auto"
               highlight="green"
               onMouseEnter={() => { setHovering('recomment') }}
               onMouseLeave={() => { setHovering(null) }}>
               <Icon name="recomment" size="19px" maskSize="cover" colour={hovering === 'recomment' ? 'green' : 'grey'} />
-              <span className={[styles.buttonText, hovering === 'recomment' && styles.green].join(' ')}>10K</span>
             </Button>
           </div>
           <div className={styles.button}>
             <Button
               type="icon"
-              size="small"
               colour="transparent"
               width="auto"
               highlight="liked"
               onMouseEnter={() => { setHovering('like') }}
               onMouseLeave={() => { setHovering(null) }}>
               <Icon name="like" size="19px" maskSize="cover" colour={hovering === 'like' ? 'liked' : 'grey'} />
-              <span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}>10K</span>
+              <span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}></span>
             </Button>
           </div>
         </div>

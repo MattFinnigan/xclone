@@ -1,6 +1,6 @@
 const postService = require('./service')
 
-exports.addPost = async (req, res, next) => {
+exports.addPost = async (req, res) => {
   try {
     const data = req.body
     const newPost = await postService.createPost(data)
@@ -15,7 +15,7 @@ exports.addPost = async (req, res, next) => {
   }
 }
 
-exports.getPosts = async (req, res, next) => {
+exports.getPosts = async (req, res) => {
   try {
     const posts = await postService.getPosts()
     res.status(200).json({
@@ -26,5 +26,23 @@ exports.getPosts = async (req, res, next) => {
   } catch (err) {
     console.error(err)
     res.status(500).json({ status: 'error', message: 'Error retrieving posts.' })
+  }
+}
+
+exports.fetchPost = async (req, res) => {
+  try {
+    const postId = req.params.postId
+    const post = await postService.getPostById(postId)
+    if (!post) {
+      return res.status(404).json({ status: 'error', message: 'Post not found.' })
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Post retrieved successfully.',
+      data: post
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error retrieving post.' })
   }
 }

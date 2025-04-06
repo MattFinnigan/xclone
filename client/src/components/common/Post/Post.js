@@ -5,29 +5,51 @@ import { useEffect, useState } from 'react'
 import Icon from '../Icon/Icon.js'
 import { useModalDispatch } from '../../../context/ModalContext.js'
 
-function Post({ post, commenting }) {
+function Post({ post, context }) {
   const [postContent, setPostContent] = useState(post.content)
   const [hovering, setHovering] = useState(null)
   const modalDispatch = useModalDispatch()
-
-  const handleComment = () => {
-    modalDispatch({ type: 'COMMENT_MODAL', data: post })
-  }
+  const navigatable = context === 'feed'
+  const commenting = context === 'commenting'
 
   useEffect(() => {
     setPostContent(sanitize(post.content))
   }, [post.content])
 
+  const handleComment = () => {
+    modalDispatch({ type: 'COMMENT_MODAL', data: post })
+  }
+
+  const navigateToPost = () => {
+    if (!navigatable) {
+      return
+    }
+    window.location.href = `/post/${post.id}`
+  }
+
   return (
-    <div className={styles.post}>
+    <div className={[styles.post, navigatable && styles.clickable].join(' ')} onClick={(e) => { navigateToPost(e) }}>
       <div className={styles.imageContainer}>
         <img src={`/images/avatars/${post.user.avatar || 'default.png'}`} alt="User Avatar" />
         {commenting && <div className={styles.threadLine} />}
       </div>
       <div className={styles.postContainer}>
         <div className={styles.postHeader}>
-          <div><strong>{post.user.name}</strong> <span className={styles.greyText}>{post.user.handle} · {formatDate(post.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</span></div>
-          {!commenting && <Button type="bare" size="small" colour="transparent" width="auto">...</Button>}
+          <div>
+            <strong className={styles.userName}>{post.user.name}</strong>
+            <span className={styles.greyText}>&nbsp;{post.user.handle} · {formatDate(post.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+          <div className={styles.dotsContain}>
+            <Button
+              type="icon"
+              highlight="primary-alt"
+              colour="transparent"
+              width="auto"
+              onMouseEnter={() => { setHovering('dots') }}
+              onMouseLeave={() => { setHovering(null) }}>
+              <Icon name="dots" size="19px" maskSize="cover" colour={hovering === 'dots' ? 'primary' : 'grey'} />
+            </Button>
+          </div>
         </div>
         <div className={styles.postContent} dangerouslySetInnerHTML={{ __html: postContent }}></div>
         {!commenting ? (
@@ -35,41 +57,38 @@ function Post({ post, commenting }) {
             <div className={styles.button}>
               <Button
                 type="icon"
-                size="small"
                 colour="transparent"
                 width="auto"
                 highlight="primary-alt"
                 onMouseEnter={() => { setHovering('comment') }}
                 onMouseLeave={() => { setHovering(null) }}
                 onClick={() => { handleComment() }}>
-                <Icon name="comment" size="19px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>10K</span>
+                <Icon name="comment" size="18px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
+                <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments.length || ''}</span>
               </Button>
             </div>
             <div className={styles.button}>
               <Button
                 type="icon"
-                size="small"
                 colour="transparent"
                 width="auto"
                 highlight="green"
                 onMouseEnter={() => { setHovering('repost') }}
                 onMouseLeave={() => { setHovering(null) }}>
                 <Icon name="repost" size="19px" maskSize="cover" colour={hovering === 'repost' ? 'green' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'repost' && styles.green].join(' ')}>10K</span>
+                <span className={[styles.buttonText, hovering === 'repost' && styles.green].join(' ')}></span>
               </Button>
             </div>
             <div className={styles.button}>
               <Button
                 type="icon"
-                size="small"
                 colour="transparent"
                 width="auto"
                 highlight="liked"
                 onMouseEnter={() => { setHovering('like') }}
                 onMouseLeave={() => { setHovering(null) }}>
                 <Icon name="like" size="19px" maskSize="cover" colour={hovering === 'like' ? 'liked' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}>10K</span>
+                <span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}></span>
               </Button>
             </div>
           </div>

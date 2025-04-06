@@ -14,7 +14,7 @@ function Page({ children }) {
   }, [location, dispatch])
   return (
     <div className={styles.page}>
-      <div className="page-content">
+      <div className={styles.pageContainer}>
         {children}
       </div>
     </div>

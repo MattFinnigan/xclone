@@ -129,6 +129,16 @@ export const createPost = (data) => {
   })
 }
 
+export const fetchPost = (id) => {
+  return new Promise((resolve, reject) => {
+    apiGet('/api/posts/' + id).then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
 export const getPosts = () => {
   return new Promise((resolve, reject) => {
     apiGet('/api/posts').then((response) => {

@@ -9,7 +9,7 @@ exports.getPosts = () => {
     order: [['createdAt', 'DESC']],
     include: [{
       model: User,
-      attributes: ['id', 'name', 'avatar', 'handle'],
+      attributes: ['name', 'avatar', 'handle'],
       as: 'user'
     },
     {
@@ -17,7 +17,7 @@ exports.getPosts = () => {
       attributes: ['id', 'content', 'createdAt'],
       include: {
         model: User,
-        attributes: ['id', 'name', 'avatar', 'handle'],
+        attributes: ['name', 'avatar', 'handle'],
         as: 'user'
       },
       as: 'comments',
@@ -32,7 +32,7 @@ exports.getPostById = (id) => {
     where: { id },
     include: [{
       model: User,
-      attributes: ['id', 'name', 'avatar', 'handle'],
+      attributes: ['name', 'avatar', 'handle'],
       as: 'user'
     },
     {
@@ -40,7 +40,7 @@ exports.getPostById = (id) => {
       attributes: ['id', 'content', 'createdAt'],
       include: {
         model: User,
-        attributes: ['id', 'name', 'avatar', 'handle'],
+        attributes: ['name', 'avatar', 'handle'],
         as: 'user'
       },
       as: 'comments',

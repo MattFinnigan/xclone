@@ -11,7 +11,7 @@ exports.getComments = (postId) => {
       {
         model: User,
         as: 'user',
-        attributes: ['id', 'name', 'avatar', 'handle']
+        attributes: ['name', 'avatar', 'handle']
       }
     ],
     order: [['createdAt', 'DESC']]

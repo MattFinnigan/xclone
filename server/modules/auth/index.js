@@ -12,7 +12,7 @@ router.post('/register', (req, res) => {
   userService.createUser({ name, email, password }).then((user) => {
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1hr' })
     delete user.password
-    res.json({ token, userId: user.id, user })
+    res.json({ token, user })
     return user
   }).catch((error) => {
     res.status(500).json({ error: error.message })
@@ -28,7 +28,7 @@ router.post('/login', (req, res) => {
     if (user?.password === password) {
       const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1hr' })
       delete user.password
-      res.json({ token, userId: user.id, user })
+      res.json({ token, user })
     } else {
       res.status(401).json({ message: 'Invalid credentials' })
     }
@@ -49,7 +49,7 @@ router.get('/check/:id', verifyToken, (req, res) => {
         return res.status(404).json({ error: 'User not found' })
       }
       delete user.password
-      res.json({ userId: decoded.userId, user })
+      res.json({ user })
     }).catch(() => {
       return res.status(500).json({ error: 'Internal server error' })
     })

@@ -14,7 +14,7 @@ function Login({ onSuccess }) {
   const modalDispatch = useModalDispatch()
 
   const handleSignup = () => {
-    modalDispatch('SIGNUP_MODAL')
+    modalDispatch({ type: 'SIGNUP_MODAL' })
   }
 
   const handleSubmit = (event) => {

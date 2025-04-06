@@ -1,4 +1,3 @@
-// import styles from './Icon.scss'
 import styles from './Icon.module.css'
 function Icon({ name, size, maskSize, colour }) {
   return (

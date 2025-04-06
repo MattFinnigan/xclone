@@ -1,12 +1,15 @@
 import styles from './Input.module.css'
 import Icon from '../Icon/Icon'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import autosize from 'autosize'
 
 function Input({ value, required, type, placeholder, placeholderLabel, icon, onChange, onFocus, onBlur, styling, size }) {
+  const inputRef = useRef(null)
+
   useEffect(() => {
     if (type === 'textarea') {
-      autosize(document.querySelector('textarea'))
+      autosize(inputRef.current)
+      console.log('Autosize applied to textarea')
     }
   })
 
@@ -25,6 +28,7 @@ function Input({ value, required, type, placeholder, placeholderLabel, icon, onC
       )}
       {type === 'textarea' ? (
         <textarea
+          ref={inputRef}
           rows="1"
           value={value}
           required={required}

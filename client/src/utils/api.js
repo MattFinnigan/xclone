@@ -138,3 +138,14 @@ export const getPosts = () => {
     })
   })
 }
+
+// comments
+export const createComment = (data) => {
+  return new Promise((resolve, reject) => {
+    apiPost('/api/comments', data).then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}

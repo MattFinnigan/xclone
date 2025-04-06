@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../configs/db')
 
-const Post = sequelize.define('Post', {
+const Comment = sequelize.define('Comment', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -21,7 +21,7 @@ const Post = sequelize.define('Post', {
       key: 'id'
     }
   },
-  reposted_post_id: {
+  post_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
@@ -38,15 +38,15 @@ const Post = sequelize.define('Post', {
     allowNull: false
   }
 })
-Post.associate = (models) => {
-  Post.belongsTo(models.User, {
+Comment.associate = (models) => {
+  Comment.belongsTo(models.User, {
     foreignKey: 'user_id',
     as: 'user'
   })
-  Post.belongsTo(models.Post, {
-    foreignKey: 'reposted_post_id',
-    as: 'repostedPost'
+  Comment.belongsTo(models.Post, {
+    foreignKey: 'post_id',
+    as: 'post'
   })
 }
 
-module.exports = Post
+module.exports = Comment

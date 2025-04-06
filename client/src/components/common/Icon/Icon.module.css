@@ -6,6 +6,7 @@ i.icon {
   vertical-align: middle;
   text-align: center;
   mask-size: 100%;
+  mask-position: center;
 }
 
 i.white {
@@ -26,4 +27,12 @@ i.primary {
 
 i.danger {
   background-color: var(--error)
+}
+
+i.green {
+  background-color: var(--green);
+}
+
+i.liked {
+  background-color: var(--liked);
 }

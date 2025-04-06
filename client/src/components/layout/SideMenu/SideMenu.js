@@ -14,7 +14,7 @@ function SideMenu() {
   const isLoggedIn = currentUser && currentUser.id
   const [showLogout, setShowLogout] = useState(false)
   const showLoginModal = () => {
-    dispatch('LOGIN_MODAL')
+    dispatch({ type: 'LOGIN_MODAL' })
   }
 
   const handleLogout = () => {

@@ -1,6 +1,9 @@
-.postForm {
+.commentFormContainer {
+  margin-top: 20px;
+}
+
+.commentForm {
   padding: 8px 10px;
-  border-bottom: 1px solid var(--borderColour);
   display: flex;
 }
 
@@ -26,11 +29,4 @@
 .buttonContainer {
   display: flex;
   justify-content: space-between;
-}
-
-.replyOptions {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--borderColour);
 }

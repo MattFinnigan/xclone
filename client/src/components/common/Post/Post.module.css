@@ -1,0 +1,90 @@
+.post {
+  border-top: 1px solid var(--borderColour);
+  display: flex;
+  padding: 12px 10px;
+}
+
+.post:first-child {
+  border-top: none;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postContainer {
+  width: 100%;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  ;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.threadLine {
+  width: 2px;
+  height: 100%;
+  background-color: rgb(96 116 135);
+  margin: 0 auto;
+  margin-top: 4px;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.postContent {
+  white-space: pre-wrap;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  margin-right: 50px;
+  margin-left: -9px;
+  margin-top: 10px;
+}
+
+.buttonText {
+  margin-left: 5px;
+  font-size: var(--sFontSize);
+  color: var(--textColourGrey);
+}
+
+.buttonText.primary {
+  color: var(--primary);
+}
+
+.buttonText.liked {
+  color: var(--liked);
+}
+
+.buttonText.green {
+  color: var(--green);
+}
+
+.replyingTo {
+  padding: 16px 0;
+}
+
+.greyText {
+  color: var(--textColourGrey);
+}

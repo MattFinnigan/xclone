@@ -1,10 +1,10 @@
 import { createContext, useContext, useReducer } from 'react'
 
-export const ModalContext = createContext(null)
+export const ModalContext = createContext({ type: null })
 export const ModalDispatchContext = createContext(null)
 
 export function ModalProvider({ children }) {
-  const [modal, dispatch] = useReducer(modalReducer, null)
+  const [modal, dispatch] = useReducer(modalReducer, { type: null })
 
   return (
     <ModalContext.Provider value={modal}>

@@ -11,6 +11,10 @@
   --primary-alt: rgba(29, 156, 240, 0.105);
   --secondary: rgb(29, 155, 240);
   --error: #FF3D71;
+  --green: #00ba7c;
+  --liked: #f91880;
+  --green-alt: rgba(0, 186, 124, 0.250);
+  --liked-alt: rgba(249, 24, 129, 0.250);
 
   --overlayColour: rgba(91, 112, 131, 0.4);
   --textColour: rgba(231, 233, 234, 1.00);

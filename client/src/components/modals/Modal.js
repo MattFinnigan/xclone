@@ -6,7 +6,7 @@ import Icon from '../common/Icon/Icon'
 function Modal({ header, content }) {
   const dispatch = useModalDispatch()
   function hideModal() {
-    dispatch(null)
+    dispatch({ type: null })
   }
   return (
     <>

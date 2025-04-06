@@ -7,7 +7,7 @@ import Page from '../Page.js'
 import Button from '../../components/common/Button/Button.js'
 import PostForm from '../../components/forms/PostForm/PostForm.js'
 import Spinner from '../../components/common/Spinner/Spinner.js'
-import Post from '../../components/Post/Post.js'
+import Post from '../../components/common/Post/Post.js'
 
 function Feed() {
   const [loading, setLoading] = useState(true)

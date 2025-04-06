@@ -113,3 +113,23 @@ button:disabled {
 .button.link:hover {
   text-decoration: underline;
 }
+
+/* overrite hover styles */
+.button.highlight-primary-alt:hover {
+  background-color: rgba(29, 156, 240, 0.250);
+  transition: all 0.2s ease-in-out;
+
+  >svg {
+    fill: var(--primary);
+  }
+}
+
+.button.highlight-green:hover {
+  background-color: var(--green-alt);
+  transition: all 0.2s ease-in-out;
+}
+
+.button.highlight-liked:hover {
+  background-color: var(--liked-alt);
+  transition: all 0.2s ease-in-out;
+}

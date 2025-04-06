@@ -9,7 +9,7 @@ exports.getPosts = () => {
     order: [['createdAt', 'DESC']],
     include: {
       model: User,
-      attributes: ['id', 'name', 'avatar'],
+      attributes: ['id', 'name', 'avatar', 'handle'],
       as: 'user'
     }
   })

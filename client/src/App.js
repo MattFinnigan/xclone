@@ -21,7 +21,10 @@ function App({ children }) {
   useEffect(() => {
     setLoading(true)
     checkAuth().then((user) => {
-      dispatchCurrentUser(user)
+      if (user) {
+        dispatchCurrentUser(user)
+      }
+    }).finally(() => {
       setLoading(false)
     })
   }, [dispatchCurrentUser])
@@ -47,8 +50,9 @@ function App({ children }) {
   }
 
   const loginSuccess = (user) => {
-    hideModal()
     dispatchCurrentUser(user)
+    hideModal()
+    window.location.reload('/')
   }
 
   const commentSuccess = (comment) => {
@@ -59,11 +63,11 @@ function App({ children }) {
   return (
     <div className={styles.app}>
       <div className={styles.appContainer}>
-        {loading ? <Spinner /> : <SideMenu />}
+        <SideMenu />
         <div className={styles.appContent}>
           {loading ? <Spinner /> : children}
         </div>
-        {loading ? <Spinner /> : <SideFeatures />}
+        <SideFeatures />
       </div>
       {renderModal()}
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchPost } from '../../utils/api.js'
+import { fetchPost, deletePost } from '../../utils/api.js'
 import { useParams } from 'react-router'
 import { formatDate, formatTime, sanitize } from '../../utils/helpers.js'
 import styles from './PostPage.module.css'
@@ -16,6 +16,7 @@ function PostPage() {
   const { postId } = useParams()
   const [hovering, setHovering] = useState(null)
   const postContent = sanitize(post?.content || '')
+  const [showExtra, setShowExtra] = useState(false)
 
   const getPost = () => {
     setLoading(true)
@@ -27,6 +28,19 @@ function PostPage() {
       setLoading(false)
     })
   }
+
+  const toggleExtras = () => {
+    setShowExtra(!showExtra)
+  }
+
+  const handleDeletePost = () => {
+    deletePost(postId).then(() => {
+      window.location.reload('/')
+    }).catch((error) => {
+      console.error('Error deleting post:', error)
+    })
+  }
+
   useEffect(() => {
     setLoading(true)
     fetchPost(postId).then((resp) => {
@@ -70,10 +84,21 @@ function PostPage() {
                       colour="transparent"
                       width="auto"
                       onMouseEnter={() => { setHovering('dots') }}
-                      onMouseLeave={() => { setHovering(null) }}>
+                      onMouseLeave={() => { setHovering(null) }}
+                      onClick={() => { toggleExtras(); setHovering(null) }}>
                       <Icon name="dots" size="19px" maskSize="cover" colour={hovering === 'dots' ? 'primary' : 'grey'} />
                     </Button>
                   </div>
+                  {showExtra && (
+                    <div className={styles.extras}>
+                      {post.canDelete && (
+                        <Button size='md' type='listitem' colour='transparent' width='100%' onClick={() => { handleDeletePost() }} >
+                          <Icon name="delete" size="20px" maskSize="cover" colour="danger" />
+                          <span className={styles.deleteText}>Delete</span>
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={styles.postContainer}>

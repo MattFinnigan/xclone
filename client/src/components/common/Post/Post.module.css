@@ -28,6 +28,10 @@
   width: 100%;
 }
 
+.postHeader {
+  position: relative;
+}
+
 .imageContainer {
   display: flex;
   flex-direction: column;
@@ -96,4 +100,23 @@
 
 .greyText {
   color: var(--textColourGrey);
+}
+
+.deleteText {
+  color: var(--error);
+  margin-left: 10px;
+}
+
+.extras {
+  transition: all 0.2s ease-in-out;
+  padding: 12px 0;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
+  z-index: 100;
+  border-radius: 1em;
+  background-color: var(--background);
 }

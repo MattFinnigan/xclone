@@ -1,5 +1,8 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../configs/db')
+const temp = require('../../configs/temp')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const Post = sequelize.define('Post', {
   id: {
@@ -36,6 +39,12 @@ const Post = sequelize.define('Post', {
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  canDelete: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return this.user_id === parseInt(temp.userId)
+    }
   }
 })
 Post.associate = (models) => {

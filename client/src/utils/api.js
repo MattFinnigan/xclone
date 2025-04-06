@@ -21,7 +21,7 @@ const handleError = (error) => {
           localStorage.removeItem('token')
           localStorage.removeItem('userId')
           api.defaults.headers['Authorization'] = ''
-          window.location.href = '/'
+          window.location.reload('/')
         })
       } else {
         return reject(error)
@@ -72,7 +72,7 @@ const apiPost = (url, data) => {
 export const checkAuth = () => {
   return new Promise((resolve, reject) => {
     if (!localStorage.getItem('userId')) {
-      return
+      resolve(null)
     }
     apiGet('/api/auth/check/' + localStorage.getItem('userId')).then((response) => {
       resolve(response.user)
@@ -111,7 +111,7 @@ export const register = (name, email, password) => {
       localStorage.setItem('token', response.token)
       localStorage.setItem('userId', response.userId)
       api.defaults.headers['Authorization'] = response.token
-      resolve(response)
+      resolve(response.user)
     }).catch((error) => {
       reject(error)
     })
@@ -142,6 +142,16 @@ export const fetchPost = (id) => {
 export const getPosts = () => {
   return new Promise((resolve, reject) => {
     apiGet('/api/posts').then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+export const deletePost = (id) => {
+  return new Promise((resolve, reject) => {
+    api.delete('/api/posts/' + id).then((response) => {
       resolve(response)
     }).catch((error) => {
       reject(error)

@@ -4,6 +4,7 @@ import { sanitize, formatDate } from '../../../utils/helpers.js'
 import { useEffect, useState } from 'react'
 import Icon from '../Icon/Icon.js'
 import { useModalDispatch } from '../../../context/ModalContext.js'
+import { deletePost } from '../../../utils/api.js'
 
 function Post({ post, context }) {
   const [postContent, setPostContent] = useState(post.content)
@@ -11,6 +12,7 @@ function Post({ post, context }) {
   const modalDispatch = useModalDispatch()
   const navigatable = context === 'feed'
   const commenting = context === 'commenting'
+  const [showExtra, setShowExtra] = useState(false)
 
   useEffect(() => {
     setPostContent(sanitize(post.content))
@@ -25,6 +27,18 @@ function Post({ post, context }) {
       return
     }
     window.location.href = `/post/${post.id}`
+  }
+
+  const handleDeletePost = () => {
+    deletePost(post.id).then(() => {
+      window.location.reload('/')
+    }).catch((error) => {
+      console.error('Error deleting post:', error)
+    })
+  }
+
+  const toggleExtras = () => {
+    setShowExtra(!showExtra)
   }
 
   return (
@@ -46,10 +60,21 @@ function Post({ post, context }) {
               colour="transparent"
               width="auto"
               onMouseEnter={() => { setHovering('dots') }}
-              onMouseLeave={() => { setHovering(null) }}>
+              onMouseLeave={() => { setHovering(null) }}
+              onClick={() => { toggleExtras(); setHovering(null) }}>
               <Icon name="dots" size="19px" maskSize="cover" colour={hovering === 'dots' ? 'primary' : 'grey'} />
             </Button>
           </div>
+          {showExtra && (
+            <div className={styles.extras}>
+              {post.canDelete && (
+                <Button size='md' type='listitem' colour='transparent' width='100%' onClick={() => { handleDeletePost() }} >
+                  <Icon name="delete" size="20px" maskSize="cover" colour="danger" />
+                  <span className={styles.deleteText}>Delete</span>
+                </Button>
+              )}
+            </div>
+          )}
         </div>
         <div className={styles.postContent} dangerouslySetInnerHTML={{ __html: postContent }}></div>
         {!commenting ? (
@@ -64,7 +89,7 @@ function Post({ post, context }) {
                 onMouseLeave={() => { setHovering(null) }}
                 onClick={() => { handleComment() }}>
                 <Icon name="comment" size="18px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments.length || ''}</span>
+                <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments?.length || ''}</span>
               </Button>
             </div>
             <div className={styles.button}>

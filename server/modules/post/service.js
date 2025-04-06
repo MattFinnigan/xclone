@@ -49,3 +49,9 @@ exports.getPostById = (id) => {
     }]
   })
 }
+
+exports.deletePost = (id) => {
+  return Post.destroy({
+    where: { id }
+  })
+}

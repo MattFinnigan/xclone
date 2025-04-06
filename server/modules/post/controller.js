@@ -46,3 +46,21 @@ exports.fetchPost = async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Error retrieving post.' })
   }
 }
+
+exports.deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId
+    const deletedPost = await postService.deletePost(postId)
+    if (!deletedPost) {
+      return res.status(404).json({ status: 'error', message: 'Post not found.' })
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Post deleted successfully.',
+      data: deletedPost
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error deleting post.' })
+  }
+}

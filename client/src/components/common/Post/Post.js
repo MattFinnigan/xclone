@@ -4,9 +4,9 @@ import { sanitize, formatDate } from '../../../utils/helpers.js'
 import { useEffect, useState } from 'react'
 import Icon from '../Icon/Icon.js'
 import { useModalDispatch } from '../../../context/ModalContext.js'
-import { deletePost } from '../../../utils/api.js'
+import { deletePost, deleteComment } from '../../../utils/api.js'
 
-function Post({ post, context }) {
+function Post({ post, context, comment }) {
   const [postContent, setPostContent] = useState(post.content)
   const [hovering, setHovering] = useState(null)
   const modalDispatch = useModalDispatch()
@@ -30,11 +30,19 @@ function Post({ post, context }) {
   }
 
   const handleDeletePost = () => {
-    deletePost(post.id).then(() => {
-      window.location.reload('/')
-    }).catch((error) => {
-      console.error('Error deleting post:', error)
-    })
+    if (comment) {
+      deleteComment(post.id).then(() => {
+        window.location.reload('/')
+      }).catch((error) => {
+        console.error('Error deleting comment:', error)
+      })
+    } else {
+      deletePost(post.id).then(() => {
+        window.location.reload('/')
+      }).catch((error) => {
+        console.error('Error deleting post:', error)
+      })
+    }
   }
 
   const toggleExtras = () => {
@@ -89,7 +97,7 @@ function Post({ post, context }) {
                 onMouseLeave={() => { setHovering(null) }}
                 onClick={() => { handleComment() }}>
                 <Icon name="comment" size="18px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments?.length || ''}</span>
+                {post.comments?.length > 0 && (<span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments?.length || ''}</span>)}
               </Button>
             </div>
             <div className={styles.button}>
@@ -101,7 +109,7 @@ function Post({ post, context }) {
                 onMouseEnter={() => { setHovering('repost') }}
                 onMouseLeave={() => { setHovering(null) }}>
                 <Icon name="repost" size="19px" maskSize="cover" colour={hovering === 'repost' ? 'green' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'repost' && styles.green].join(' ')}></span>
+                {post.reposts && (<span className={[styles.buttonText, hovering === 'repost' && styles.green].join(' ')}></span>)}
               </Button>
             </div>
             <div className={styles.button}>
@@ -113,7 +121,7 @@ function Post({ post, context }) {
                 onMouseEnter={() => { setHovering('like') }}
                 onMouseLeave={() => { setHovering(null) }}>
                 <Icon name="like" size="19px" maskSize="cover" colour={hovering === 'like' ? 'liked' : 'grey'} />
-                <span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}></span>
+                {post.likes && (<span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}></span>)}
               </Button>
             </div>
           </div>

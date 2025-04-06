@@ -28,3 +28,17 @@ exports.getComments = async (req, res, next) => {
     res.status(500).json({ status: 'error', message: 'Error retrieving comments.' })
   }
 }
+
+exports.deleteComment = async (req, res, next) => {
+  try {
+    const commentId = req.params.commentId
+    await commentService.deleteComment(commentId)
+    res.status(200).json({
+      status: 'success',
+      message: 'Comment deleted successfully.'
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error deleting comment.' })
+  }
+}

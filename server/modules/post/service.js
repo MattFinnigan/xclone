@@ -14,7 +14,6 @@ exports.getPosts = () => {
     },
     {
       model: Comment,
-      attributes: ['id', 'content', 'createdAt'],
       include: {
         model: User,
         attributes: ['name', 'avatar', 'handle'],
@@ -37,7 +36,6 @@ exports.getPostById = (id) => {
     },
     {
       model: Comment,
-      attributes: ['id', 'content', 'createdAt'],
       include: {
         model: User,
         attributes: ['name', 'avatar', 'handle'],

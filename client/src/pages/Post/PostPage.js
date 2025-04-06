@@ -9,6 +9,8 @@ import Button from '../../components/common/Button/Button.js'
 import Icon from '../../components/common/Icon/Icon.js'
 import CommentForm from '../../components/forms/CommentForm/CommentForm.js'
 import Post from '../../components/common/Post/Post.js'
+import { useModalDispatch } from '../../context/ModalContext.js'
+import { useCurrentUser } from '../../context/CurrentUserContext.js'
 
 function PostPage() {
   const [loading, setLoading] = useState(true)
@@ -17,9 +19,10 @@ function PostPage() {
   const [hovering, setHovering] = useState(null)
   const postContent = sanitize(post?.content || '')
   const [showExtra, setShowExtra] = useState(false)
+  const modalDispatch = useModalDispatch()
+  const currentUser = useCurrentUser()
 
   const getPost = () => {
-    setLoading(true)
     fetchPost(postId).then((resp) => {
       setPost(resp.data)
     }).catch((error) => {
@@ -35,10 +38,14 @@ function PostPage() {
 
   const handleDeletePost = () => {
     deletePost(postId).then(() => {
-      window.location.reload('/')
+      window.location.href = '/'
     }).catch((error) => {
       console.error('Error deleting post:', error)
     })
+  }
+
+  const handleComment = () => {
+    modalDispatch({ type: 'COMMENT_MODAL', data: post })
   }
 
   useEffect(() => {
@@ -116,8 +123,10 @@ function PostPage() {
                       width="auto"
                       highlight="primary-alt"
                       onMouseEnter={() => { setHovering('comment') }}
-                      onMouseLeave={() => { setHovering(null) }}>
+                      onMouseLeave={() => { setHovering(null) }}
+                      onClick={() => { handleComment(); setHovering(null) }}>
                       <Icon name="comment" size="23px" maskSize="cover" colour={hovering === 'comment' ? 'primary' : 'grey'} />
+                      {post.comments?.length > 0 && (<span className={[styles.buttonText, hovering === 'comment' && styles.primary].join(' ')}>{post.comments?.length || ''}</span>)}
                     </Button>
                   </div>
                   <div className={styles.button}>
@@ -129,6 +138,7 @@ function PostPage() {
                       onMouseEnter={() => { setHovering('repost') }}
                       onMouseLeave={() => { setHovering(null) }}>
                       <Icon name="repost" size="23px" maskSize="cover" colour={hovering === 'repost' ? 'green' : 'grey'} />
+                      {post.reposts && (<span className={[styles.buttonText, hovering === 'repost' && styles.green].join(' ')}></span>)}
                     </Button>
                   </div>
                   <div className={styles.button}>
@@ -140,7 +150,7 @@ function PostPage() {
                       onMouseEnter={() => { setHovering('like') }}
                       onMouseLeave={() => { setHovering(null) }}>
                       <Icon name="like" size="23px" maskSize="cover" colour={hovering === 'like' ? 'liked' : 'grey'} />
-                      <span className={[styles.buttonText, hovering === 'like' ? styles.liked : styles.greyText].join(' ')}> </span>
+                      {post.likes && (<span className={[styles.buttonText, hovering === 'like' && styles.liked].join(' ')}></span>)}
                     </Button>
                   </div>
                   <div></div>
@@ -149,11 +159,11 @@ function PostPage() {
               </div>
             </div>
             <div className={styles.replyContainer}>
-              <CommentForm post={post} onSuccess={() => getPost()} />
+              {currentUser && (<CommentForm post={post} onSuccess={() => getPost()} />)}
             </div>
             <div className={styles.commentsContainer}>
               {post.comments.map((comment) => (
-                <Post key={comment.id} post={comment} onSuccess={() => getPost()} />
+                <Post key={comment.id} post={comment} comment={true} onSuccess={() => getPost()} />
               ))}
             </div>
           </>

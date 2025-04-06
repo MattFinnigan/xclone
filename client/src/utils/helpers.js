@@ -3,7 +3,8 @@ import sanitizeHtml from 'sanitize-html'
 export const logout = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('userId')
-  window.location.reload()
+  window.location.reload('/')
+  window.location.href = '/'
 }
 
 export const sanitize = (dirty) => {

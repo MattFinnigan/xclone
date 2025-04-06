@@ -169,3 +169,13 @@ export const createComment = (data) => {
     })
   })
 }
+
+export const deleteComment = (id) => {
+  return new Promise((resolve, reject) => {
+    api.delete('/api/comments/' + id).then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}

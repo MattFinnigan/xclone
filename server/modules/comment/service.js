@@ -21,3 +21,9 @@ exports.getComments = (postId) => {
 exports.getCommentById = (id) => {
   return Comment.findByPk(id)
 }
+
+exports.deleteComment = (id) => {
+  return Comment.destroy({
+    where: { id }
+  })
+}

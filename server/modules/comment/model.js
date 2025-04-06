@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../configs/db')
+const temp = require('../../configs/temp')
 
 const Comment = sequelize.define('Comment', {
   id: {
@@ -36,6 +37,12 @@ const Comment = sequelize.define('Comment', {
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  canDelete: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return this.user_id === parseInt(temp.userId)
+    }
   }
 })
 Comment.associate = (models) => {

@@ -89,13 +89,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 6px 0;
-  border-top: 1px solid var(--borderColour);
-  border-bottom: 1px solid var(--borderColour);
 }
 
 .replyContainer {
+  border-top: 1px solid var(--borderColour);
   border-bottom: 1px solid var(--borderColour);
-  padding-bottom: 8px;
+  padding: 8px 0;
 }
 
 .deleteText {

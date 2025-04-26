@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useCurrentUser } from '../../context/CurrentUserContext.js'
 import { useCurrentPosts, useCurrentPostsDispatch } from '../../context/CurrentPostsContext.js'
-import { getPosts } from '../../utils/api.js'
+import { getPosts, fetchPost } from '../../utils/api.js'
 import styles from './Feed.module.css'
 import Page from '../Page.js'
 import Button from '../../components/common/Button/Button.js'
@@ -27,6 +27,17 @@ function Feed() {
       setLoading(false)
     })
   }, [currentPostsDispatch])
+
+  const refreshSinglePost = (id) => {
+    fetchPost(id).then((resp) => {
+      currentPostsDispatch(currentPosts.map((p) => {
+        if (p.id === resp.data.id) {
+          return resp.data
+        }
+        return p
+      }))
+    })
+  }
 
   const refreshPosts = () => {
     setLoading(true)
@@ -55,13 +66,17 @@ function Feed() {
             {feedOption === 'following' && (<div className={styles.underline} style={{ width: '70px' }}></div>)}
           </div>
         </div>
-        {isLoggedIn && (<PostForm onSuccess={refreshPosts} />)}
+        {isLoggedIn && (
+          <div className={styles.postForm}>
+            <PostForm onSuccess={refreshPosts} />
+          </div>
+        )}
         <div className={styles.feedContent}>
         </div>
         <div className={styles.feedPosts}>
           {loading && <Spinner />}
           {!loading && currentPosts.map((post) => (
-            <Post key={post.id} post={post} context="feed" />
+            <Post key={post.id} post={post} context="feed" onPostUpdated={() => refreshSinglePost(post.id)} />
           ))}
         </div>
       </div>

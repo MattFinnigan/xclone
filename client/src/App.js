@@ -52,7 +52,6 @@ function App({ children }) {
   const loginSuccess = (user) => {
     dispatchCurrentUser(user)
     hideModal()
-    window.location.reload('/')
   }
 
   const commentSuccess = (comment) => {

@@ -47,6 +47,29 @@ const Post = sequelize.define('Post', {
     }
   }
 })
+
+Post.prototype.toggleLike = async function (userId) {
+  const likes = await fetchPostLikes(this)
+  const liked = likes.some((like) => like.user_id === parseInt(userId))
+  if (liked) {
+    await sequelize.query(
+      'DELETE FROM post_likes WHERE post_id = ? AND user_id = ?',
+      {
+        replacements: [this.id, userId],
+        type: sequelize.QueryTypes.DELETE
+      }
+    )
+  } else {
+    await sequelize.query(
+      'INSERT INTO post_likes (post_id, user_id) VALUES (?, ?)',
+      {
+        replacements: [this.id, userId],
+        type: sequelize.QueryTypes.INSERT
+      }
+    )
+  }
+}
+
 Post.associate = (models) => {
   Post.belongsTo(models.User, {
     foreignKey: 'user_id',
@@ -62,6 +85,24 @@ Post.associate = (models) => {
     onDelete: 'CASCADE',
     hooks: true
   })
+}
+
+Post.afterFind((model) => {
+  const posts = Array.isArray(model) ? model : [model]
+  posts.forEach(async (post) => {
+    post.dataValues.likes = await fetchPostLikes(post) 
+    post.dataValues.liked = post.dataValues.likes.some((like) => like.user_id === parseInt(temp.userId))
+  })
+})
+
+async function fetchPostLikes (post) {
+  return await sequelize.query(
+    'SELECT * FROM post_likes WHERE post_id = ?',
+    {
+      replacements: [post.dataValues.id],
+      type: sequelize.QueryTypes.SELECT
+    }
+  )
 }
 
 module.exports = Post

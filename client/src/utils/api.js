@@ -96,7 +96,7 @@ export const login = (email, password) => {
   return new Promise((resolve, reject) => {
     apiPost('/api/auth/login', { email, password }).then((response) => {
       localStorage.setItem('token', response.token)
-      localStorage.setItem('userId', response.userId)
+      localStorage.setItem('userId', response.user.id)
       api.defaults.headers['Authorization'] = response.token
       resolve(response.user)
     }).catch((error) => {
@@ -132,6 +132,7 @@ export const createPost = (data) => {
 export const fetchPost = (id) => {
   return new Promise((resolve, reject) => {
     apiGet('/api/posts/' + id).then((response) => {
+      console.log('fetchPost', response)
       resolve(response)
     }).catch((error) => {
       reject(error)
@@ -173,6 +174,18 @@ export const createComment = (data) => {
 export const deleteComment = (id) => {
   return new Promise((resolve, reject) => {
     api.delete('/api/comments/' + id).then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+// like
+export const toggleLike = (postId) => {
+  return new Promise((resolve, reject) => {
+    apiPost('/api/posts/' + postId + '/like').then((response) => {
+      console.log('toggleLike', response)
       resolve(response)
     }).catch((error) => {
       reject(error)

@@ -76,15 +76,22 @@
   margin-right: 12px;
   font-size: var(--mFontSize);
   text-align: left;
+  max-width: 150px;
 }
 
 .userName {
   font-weight: var(--fontWeightBold);
   color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .userHandle {
   color: var(--textColourGrey);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dots {

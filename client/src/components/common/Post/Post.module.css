@@ -30,6 +30,7 @@
 
 .postHeader {
   position: relative;
+  display: flex;
 }
 
 .imageContainer {
@@ -37,7 +38,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  flex: 0 0 40px;
+  width: 40px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -63,17 +64,45 @@
 
 .postContent {
   white-space: pre-wrap;
+  margin-left: 50px;
+  margin-top: -17px;  /*hmm yikes*/
+}
+
+.postContent.onPage {
+  font-size: var(--mlFontSize);
+  margin-top: 12px;
+  margin-left: 0;
+  margin-top: 6px;
+}
+
+.postDetails {
+  color: var(--textColourGrey);
+  margin: 12px 0;
 }
 
 .buttonContainer {
   display: flex;
   align-items: center;
+  margin-left: 50px;
+}
+
+.buttonContainer.onPage {
+  margin: 0;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-top: 1px solid var(--borderColour);
+  border-bottom: 1px solid var(--borderColour);
 }
 
 .button {
   margin-right: 50px;
   margin-left: -9px;
   margin-top: 10px;
+  min-width: 62px;
+}
+
+.button.onPage {
+  margin: 0;
 }
 
 .buttonText {
@@ -119,4 +148,9 @@
   z-index: 100;
   border-radius: 1em;
   background-color: var(--background);
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
 }

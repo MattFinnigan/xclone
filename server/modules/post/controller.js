@@ -64,3 +64,22 @@ exports.deletePost = async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Error deleting post.' })
   }
 }
+
+exports.toggleLike = async (req, res) => {
+  try {
+    const postId = req.params.postId
+    const userId = req.userId
+    const post = await postService.toggleLike(postId, userId)
+    if (!post) {
+      return res.status(404).json({ status: 'error', message: 'Post not found.' })
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Post like toggled successfully.',
+      data: post
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error liking/unliking post.' })
+  }
+}

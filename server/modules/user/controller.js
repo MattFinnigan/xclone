@@ -36,18 +36,3 @@ exports.getUserById = async (req, res, next) => {
     res.status(500).json({ status: 'error', message: 'Error fetching user.' })
   }
 }
-
-exports.getAllUsers = async (req, res, next) => {
-  try {
-    const users = await userService.getAllUsers(req.query)
-    res.status(200).json({
-      status: 'success',
-      data: {
-        users
-      }
-    })
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ status: 'error', message: 'Error fetching users.' })
-  }
-}

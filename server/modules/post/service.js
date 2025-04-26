@@ -1,10 +1,10 @@
 const { Post, User, Comment } = require('../index')
 
-exports.createPost = (data) => {
+const createPost = (data) => {
   return Post.create(data)
 }
 
-exports.getPosts = () => {
+const getPosts = () => {
   return Post.findAll({
     order: [['createdAt', 'DESC']],
     include: [{
@@ -26,8 +26,8 @@ exports.getPosts = () => {
   })
 }
 
-exports.getPostById = (id) => {
-  return Post.findOne({
+const getPostById = async (id) => {
+  const post = Post.findOne({
     where: { id },
     include: [{
       model: User,
@@ -46,10 +46,30 @@ exports.getPostById = (id) => {
       order: [['createdAt', 'DESC']]
     }]
   })
+  return post
 }
 
-exports.deletePost = (id) => {
+const deletePost = (id) => {
   return Post.destroy({
     where: { id }
   })
+}
+
+const toggleLike = async (postId, userId) => {
+  const post = await getPostById(postId)
+  if (!post) {
+    console.error('Post not found')
+    return null
+  }
+  await post.toggleLike(userId)
+  const updatedPost = await getPostById(postId) 
+  return updatedPost
+}
+
+module.exports = {
+  createPost,
+  getPosts,
+  getPostById,
+  deletePost,
+  toggleLike
 }

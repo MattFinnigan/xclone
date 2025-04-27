@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../../configs/db')
 const temp = require('../../configs/temp')
-const jwt = require('jsonwebtoken')
+
 require('dotenv').config()
 
 const Post = sequelize.define('Post', {
@@ -79,8 +79,8 @@ Post.associate = (models) => {
     foreignKey: 'reposted_post_id',
     as: 'repostedPost'
   })
-  Post.hasMany(models.Comment, {
-    foreignKey: 'post_id',
+  Post.hasMany(models.Post, {
+    foreignKey: 'comment_post_id',
     as: 'comments',
     onDelete: 'CASCADE',
     hooks: true

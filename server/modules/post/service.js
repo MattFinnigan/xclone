@@ -1,4 +1,4 @@
-const { Post, User, Comment } = require('../index')
+const { Post, User } = require('../index')
 
 const createPost = (data) => {
   return Post.create(data)
@@ -6,6 +6,10 @@ const createPost = (data) => {
 
 const getPosts = () => {
   return Post.findAll({
+    where: {
+      comment_post_id: null,
+      reposted_post_id: null
+    },
     order: [['createdAt', 'DESC']],
     include: [{
       model: User,
@@ -13,7 +17,7 @@ const getPosts = () => {
       as: 'user'
     },
     {
-      model: Comment,
+      model: Post,
       include: {
         model: User,
         attributes: ['name', 'avatar', 'handle'],
@@ -29,22 +33,39 @@ const getPosts = () => {
 const getPostById = async (id) => {
   const post = Post.findOne({
     where: { id },
-    include: [{
-      model: User,
-      attributes: ['name', 'avatar', 'handle'],
-      as: 'user'
-    },
-    {
-      model: Comment,
-      include: {
+    include: [
+      {
         model: User,
         attributes: ['name', 'avatar', 'handle'],
         as: 'user'
       },
-      as: 'comments',
-      separate: true,
-      order: [['createdAt', 'DESC']]
-    }]
+      {
+        model: Post,
+        as: 'comments',
+        separate: true,
+        order: [['createdAt', 'DESC']],
+        include: [
+          {
+            model: User,
+            attributes: ['name', 'avatar', 'handle'],
+            as: 'user',
+          },
+          {
+            model: Post,
+            as: 'comments',
+            separate: true,
+            order: [['createdAt', 'DESC']],
+            include: [
+              {
+                model: User,
+                attributes: ['name', 'avatar', 'handle'],
+                as: 'user',
+              }
+            ]
+          }
+        ],
+      }
+    ]
   })
   return post
 }

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { Post, Comment } = require('../modules/index')
-const sequelize = require('../configs/db')
+const { Post } = require('../modules/index')
 const temp = require('../configs/temp')
 require('dotenv').config()
 
@@ -51,7 +50,7 @@ const verifyDeleteComment = (req, res, next) => {
     if (err) {
       return res.status(401).json({ error: 'Invalid token' })
     }
-    Comment.findOne({
+    Post.findOne({
       where: { id: req.params.commentId }
     }).then((comment) => {
       const userId = parseInt(decoded.userId)

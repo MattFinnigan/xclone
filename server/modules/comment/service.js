@@ -1,12 +1,12 @@
-const { Comment, Post, User } = require('../index')
+const { Post, User } = require('../index')
 
 exports.createComment = (data) => {
-  return Comment.create(data)
+  return Post.create({ ...data, comment_post_id: data.post_id })
 }
 
 exports.getComments = (postId) => {
-  return Comment.findAll({
-    where: { post_id: postId },
+  return Post.findAll({
+    where: { comment_post_id: postId },
     include: [
       {
         model: User,
@@ -19,11 +19,11 @@ exports.getComments = (postId) => {
 }
 
 exports.getCommentById = (id) => {
-  return Comment.findByPk(id)
+  return Post.findByPk(id)
 }
 
 exports.deleteComment = (id) => {
-  return Comment.destroy({
+  return Post.destroy({
     where: { id }
   })
 }

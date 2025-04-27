@@ -1,7 +1,6 @@
 const User = require('./user/model')
 const Post = require('./post/model')
-const Comment = require('./comment/model')
-const models = { User, Post, Comment }
+const models = { User, Post }
 
 // Run associations
 Object.values(models).forEach((model) => {

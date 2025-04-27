@@ -9,13 +9,14 @@ import Icon from '../../components/common/Icon/Icon.js'
 import CommentForm from '../../components/forms/CommentForm/CommentForm.js'
 import Post from '../../components/common/Post/Post.js'
 import { useCurrentUser } from '../../context/CurrentUserContext.js'
+import { useModalDispatch } from '../../context/ModalContext.js'
 
 function PostPage() {
   const [loading, setLoading] = useState(true)
   const [post, setPost] = useState(null)
   const { postId } = useParams()
   const currentUser = useCurrentUser()
-
+  const modalDispatch = useModalDispatch()
 
   const getPost = () => {
     fetchPost(postId).then((resp) => {
@@ -25,6 +26,10 @@ function PostPage() {
     }).finally(() => {
       setLoading(false)
     })
+  }
+
+  const handleComment = () => {
+    modalDispatch({ type: 'COMMENT_MODAL', data: post })
   }
 
   useEffect(() => {
@@ -51,7 +56,7 @@ function PostPage() {
                 </Button>
                 <h2 className={styles.postTitle}>Post</h2>
               </div>
-              <Button size="sm" colour="black" width="auto" onClick={() => { window.location.href = `/post/${postId}/edit` }}>
+              <Button size="sm" colour="black" width="auto" onClick={() => { handleComment() }}>
                 Reply
               </Button>
             </div>
@@ -63,7 +68,7 @@ function PostPage() {
             )}
             <div className={styles.commentsContainer}>
               {post.comments.map((comment) => (
-                <Post key={comment.id} post={comment} comment={true} onSuccess={() => getPost()} />
+                <Post key={comment.id} post={comment} onSuccess={() => getPost()} />
               ))}
             </div>
           </>

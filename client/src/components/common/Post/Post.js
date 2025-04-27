@@ -5,11 +5,15 @@ import { deletePost, toggleLike } from '../../../utils/api.js'
 import { useState } from 'react'
 
 function Post({ post, context, onPostUpdated }) {
-  const [canToggleLike, setCanToggleLike] = useState()
+  const [canToggleLike, setCanToggleLike] = useState(true)
   const modalDispatch = useModalDispatch()
 
   const handleComment = () => {
     modalDispatch({ type: 'COMMENT_MODAL', data: post })
+  }
+
+  const handleRepost = () => {
+    modalDispatch({ type: 'REPOST_MODAL', data: post })
   }
 
   const navigateToPost = (id) => {
@@ -41,6 +45,7 @@ function Post({ post, context, onPostUpdated }) {
         deletePost={handleDeletePost}
         navigateToPost={navigateToPost}
         handleComment={handleComment}
+        handleRepost={handleRepost}
         canToggleLike={canToggleLike}
         onPostUpdated={onPostUpdated}/>
     </div>

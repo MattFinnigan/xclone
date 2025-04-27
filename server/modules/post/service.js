@@ -4,29 +4,71 @@ const createPost = (data) => {
   return Post.create(data)
 }
 
+const createRepost = (data) => {
+  return Post.create({ ...data, reposted_post_id: data.post_id })
+}
+
 const getPosts = () => {
   return Post.findAll({
     where: {
-      comment_post_id: null,
-      reposted_post_id: null
+      comment_post_id: null
     },
     order: [['createdAt', 'DESC']],
-    include: [{
-      model: User,
-      attributes: ['name', 'avatar', 'handle'],
-      as: 'user'
-    },
-    {
-      model: Post,
-      include: {
+    include: [
+      {
+        model: Post,
+        as: 'repost',
+        include: [
+          {
+            model: Post,
+            as: 'comments',
+            separate: true,
+            order: [['createdAt', 'DESC']],
+            include: [
+              {
+                model: User,
+                attributes: ['name', 'avatar', 'handle'],
+                as: 'user',
+              },
+              {
+                model: Post,
+                as: 'comments',
+                separate: true,
+                order: [['createdAt', 'DESC']],
+                include: [
+                  {
+                    model: User,
+                    attributes: ['name', 'avatar', 'handle'],
+                    as: 'user',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            model: User,
+            attributes: ['name', 'avatar', 'handle'],
+            as: 'user'
+          }
+        ]
+      },
+      {
         model: User,
         attributes: ['name', 'avatar', 'handle'],
         as: 'user'
       },
-      as: 'comments',
-      separate: true,
-      order: [['createdAt', 'DESC']]
-    }]
+      {
+        model: Post,
+        include: {
+          model: User,
+          attributes: ['name', 'avatar', 'handle'],
+          as: 'user'
+        },
+        as: 'comments',
+        separate: true,
+        order: [['createdAt', 'DESC']]
+      }
+    ]
   })
 }
 
@@ -38,6 +80,43 @@ const getPostById = async (id) => {
         model: User,
         attributes: ['name', 'avatar', 'handle'],
         as: 'user'
+      },
+      {
+        model: Post,
+        as: 'repost',
+        include: [
+          {
+            model: Post,
+            as: 'comments',
+            separate: true,
+            order: [['createdAt', 'DESC']],
+            include: [
+              {
+                model: User,
+                attributes: ['name', 'avatar', 'handle'],
+                as: 'user',
+              },
+              {
+                model: Post,
+                as: 'comments',
+                separate: true,
+                order: [['createdAt', 'DESC']],
+                include: [
+                  {
+                    model: User,
+                    attributes: ['name', 'avatar', 'handle'],
+                    as: 'user',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            model: User,
+            attributes: ['name', 'avatar', 'handle'],
+            as: 'user'
+          }
+        ]
       },
       {
         model: Post,
@@ -92,5 +171,6 @@ module.exports = {
   getPosts,
   getPostById,
   deletePost,
-  toggleLike
+  toggleLike,
+  createRepost
 }

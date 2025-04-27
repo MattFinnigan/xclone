@@ -1,0 +1,28 @@
+.commentForm {
+  padding: 8px 10px;
+  display: flex;
+}
+
+.formWrapper {
+  width: 100%;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}

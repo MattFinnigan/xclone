@@ -75,14 +75,14 @@ Post.associate = (models) => {
     foreignKey: 'user_id',
     as: 'user'
   })
-  Post.belongsTo(models.Post, {
-    foreignKey: 'reposted_post_id',
-    as: 'repostedPost'
-  })
   Post.hasMany(models.Post, {
     foreignKey: 'comment_post_id',
     as: 'comments',
-    onDelete: 'CASCADE',
+    hooks: true
+  })
+  Post.belongsTo(models.Post, {
+    foreignKey: 'reposted_post_id',
+    as: 'repost',
     hooks: true
   })
 }
@@ -92,8 +92,20 @@ Post.afterFind((model) => {
   posts.forEach(async (post) => {
     post.dataValues.likes = await fetchPostLikes(post) 
     post.dataValues.liked = post.dataValues.likes.some((like) => like.user_id === parseInt(temp.userId))
+    post.dataValues.reposts = await fetchReposts(post)
+    post.dataValues.reposted = post.dataValues.reposts.some((repost) => repost.user_id === parseInt(temp.userId))
   })
 })
+
+async function fetchReposts (post) {
+  return await sequelize.query(
+    'SELECT * FROM posts WHERE reposted_post_id = ?',
+    {
+      replacements: [post.dataValues.id],
+      type: sequelize.QueryTypes.SELECT
+    }
+  )
+}
 
 async function fetchPostLikes (post) {
   return await sequelize.query(

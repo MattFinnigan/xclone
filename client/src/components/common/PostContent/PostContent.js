@@ -4,14 +4,15 @@ import { sanitize, formatDate, formatTime } from '../../../utils/helpers.js'
 import { useEffect, useState } from 'react'
 import Icon from '../Icon/Icon.js'
 
-function PostContent({ post, context, toggleLike, deletePost, navigateToPost, handleComment, canToggleLike, onPostUpdated }) {
+function PostContent({ post, context, toggleLike, deletePost, navigateToPost, handleComment, handleRepost, canToggleLike, hideActions }) {
   const [postContent, setPostContent] = useState(post.content)
   const [hovering, setHovering] = useState(null)
   const [showExtra, setShowExtra] = useState(false)
 
-  const navigatable = context !== 'page'
   const commenting = context === 'commenting'
   const page = context === 'page'
+  const repost = context.indexOf('repost') !== -1
+  const navigatable = !page && context !== 'reposting' && !commenting
 
   useEffect(() => {
     setPostContent(sanitize(post.content))
@@ -21,19 +22,26 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
     setShowExtra(!showExtra)
   }
 
+  const handleNavigate = (postId) => {
+    if (!navigatable) {
+      return
+    }
+    navigateToPost(postId)
+  }
+
   return (
     <>
-      <div className={[styles.post, navigatable ? styles.clickable : ''].join(' ')} onClick={(e) => { navigateToPost(post.id) }}>
+      <div className={[styles.post, navigatable ? styles.clickable : '', repost ? styles.repost : ''].join(' ')} onClick={(e) => { handleNavigate(post.id) }}>
         <div className={styles.postContainer}>
           <div className={styles.postHeader}>
-            <div className={styles.imageContainer}>
+            <div className={[styles.imageContainer, repost ? styles.smallImg : ''].join(' ')}>
               <img src={`/images/avatars/${post.user.avatar || 'default.png'}`} alt="User Avatar" />
             </div>
-            <div className={page ? styles.flexCol : ''}>
+            <div className={[styles.userDetails, page ? styles.flexCol : '', repost ? styles.repost : ''].join(' ')}>
               <strong className={styles.userName}>{post.user.name}</strong>
               <span className={styles.greyText}>{!page && <>&nbsp;</>}{post.user.handle}{!page && <> · {formatDate(post.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</>}</span>
             </div>
-            {!commenting && 
+            {!commenting && !hideActions &&
               <div className={styles.dotsContain}>
                 <Button
                   type="icon"
@@ -59,7 +67,10 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
             )}
           </div>
           {commenting && <div className={styles.threadLine} />}
-          <div className={[styles.postContent, page ? styles.onPage : ''].join(' ')} dangerouslySetInnerHTML={{ __html: postContent }}></div>
+          <div className={[styles.postContent, page ? styles.onPage : '', repost ? styles.repost : ''].join(' ')}>
+            <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
+            {post.repost && <PostContent post={post.repost} context={'repost'} hideActions={true} navigateToPost={() => { handleNavigate(repost.id) }}/>}
+          </div>
           {page && (
             <div className={styles.postDetails}>
               {formatTime(post.createdAt, { hour: '2-digit', minute: '2-digit' })}&nbsp;·&nbsp;
@@ -67,7 +78,7 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
               <span className={styles.greyText}><strong style={{ color: 'white' }}>165</strong> Views</span>
             </div>
           )}
-          {!commenting ? (
+          {!commenting && !hideActions && (
             <div className={[styles.buttonContainer, page ? styles.onPage : ''].join(' ')}>
               <div className={[styles.button, page ? styles.onPage : ''].join(' ')}>
                 <Button
@@ -89,9 +100,10 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
                   width="auto"
                   highlight="green"
                   onMouseEnter={() => { setHovering('repost') }}
-                  onMouseLeave={() => { setHovering(null) }}>
-                  <Icon name="repost" size={page ? '23px' : '19px'}  maskSize="cover" colour={hovering === 'repost' ? 'green' : 'grey'} />
-                  {post.reposts && (<span className={[styles.buttonText, hovering === 'repost' ? styles.green : ''].join(' ')}></span>)}
+                  onMouseLeave={() => { setHovering(null) }}
+                  onClick={() => { handleRepost() }}>
+                  <Icon name="repost" size={page ? '23px' : '19px'}  maskSize="cover" colour={hovering === 'repost' || post.reposted ? 'green' : 'grey'} />
+                  {post.reposts && (<span className={[styles.buttonText, hovering === 'repost' || post.reposted ? styles.green : ''].join(' ')}>{post.reposts.length > 0 ? post.reposts.length : ''}</span>)}
                 </Button>
               </div>
               <div className={[styles.button, page ? styles.onPage : ''].join(' ')}>
@@ -115,12 +127,12 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
                 </>
               )}
             </div>
-          ) : (
+          )}
+          {commenting && (
             <div className={styles.replyingTo}>
               <p className={styles.greyText}>Replying to <Button type="link">{post.user.handle}</Button></p>
             </div>
-          )
-          }
+          )}
         </div>
       </div>
     </>

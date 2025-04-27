@@ -68,7 +68,7 @@ function PostPage() {
             )}
             <div className={styles.commentsContainer}>
               {post.comments.map((comment) => (
-                <Post key={comment.id} post={comment} onSuccess={() => getPost()} />
+                <Post key={comment.id} post={comment} onPostUpdated={() => getPost()} />
               ))}
             </div>
           </>

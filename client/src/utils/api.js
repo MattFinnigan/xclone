@@ -181,6 +181,18 @@ export const deleteComment = (id) => {
   })
 }
 
+// repost
+export const createRepost = (data) => {
+  return new Promise((resolve, reject) => {
+    apiPost('/api/posts/repost', data).then((response) => {
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+
 // like
 export const toggleLike = (postId) => {
   return new Promise((resolve, reject) => {

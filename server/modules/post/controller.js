@@ -15,6 +15,21 @@ exports.addPost = async (req, res) => {
   }
 }
 
+exports.addRepost = async (req, res) => {
+  try {
+    const data = req.body
+    const newPost = await postService.createRepost(data)
+    res.status(200).json({
+      status: 'success',
+      message: 'Repost created successfully.',
+      data: newPost
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error creating post.' })
+  }
+}
+
 exports.getPosts = async (req, res) => {
   try {
     const posts = await postService.getPosts()

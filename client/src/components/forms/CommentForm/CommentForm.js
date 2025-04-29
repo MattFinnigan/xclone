@@ -29,7 +29,7 @@ function CommentForm({ post, includePost, onSuccess }) {
   }
   return (
     <div className={styles.commentFormContainer}>
-      {includePost && <Post post={post} context="commenting" />}
+      {includePost && <Post post={post} context="commenting"/>}
       <div className={styles.commentForm}>
         <div className={styles.imageContainer}>
           <img src={`/images/avatars/${currentUser.avatar || 'default.png'}`} alt="avatar" />

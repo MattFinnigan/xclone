@@ -42,7 +42,7 @@ function RepostForm({ post, onSuccess }) {
               placeholder="Add a comment"
               value={commentContent}
               onChange={(e) => setCommentContent(e.target.value)} />
-            <div className={styles.postContainer}>{<PostContent context={'reposting'} post={post} hideActions={true}/>}</div>
+            <div className={styles.postContainer}>{<PostContent context="reposting" post={post} hideActions={true}/>}</div>
             <div className={styles.buttonContainer}>
               <div></div>
               <div className={styles.commentButton}>

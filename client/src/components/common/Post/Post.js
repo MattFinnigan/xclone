@@ -4,7 +4,7 @@ import { useModalDispatch } from '../../../context/ModalContext.js'
 import { deletePost, toggleLike } from '../../../utils/api.js'
 import { useState } from 'react'
 
-function Post({ post, context, onPostUpdated }) {
+function Post({ post, context, onPostUpdated, styled }) {
   const [canToggleLike, setCanToggleLike] = useState(true)
   const modalDispatch = useModalDispatch()
 
@@ -37,7 +37,7 @@ function Post({ post, context, onPostUpdated }) {
   }
 
   return (
-    <div className={styles.post}>
+    <div className={[styles.post, styles[styled]].join(' ')}>
       <PostContent
         post={post}
         context={context}

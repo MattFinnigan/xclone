@@ -60,17 +60,19 @@ function PostPage() {
                 Reply
               </Button>
             </div>
-            <Post key={post.id} post={post} context={'page'} onPostUpdated={() => getPost()}/>
+            <Post key={post.id} post={post} context="post" onPostUpdated={() => getPost()}/>
             {currentUser && (
               <div className={styles.replyContainer}>
                 <CommentForm post={post} onSuccess={() => getPost()} />
               </div>
             )}
-            <div className={styles.commentsContainer}>
-              {post.comments.map((comment) => (
-                <Post key={comment.id} post={comment} onPostUpdated={() => getPost()} />
-              ))}
-            </div>
+            {post.comments.length > 0 && (
+              <div className={styles.commentsContainer}>
+                {post.comments.map((comment, i) => (
+                  <Post key={comment.id} styled={i === 0 && 'noBorder'} post={comment} context="post" onPostUpdated={() => getPost()} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>

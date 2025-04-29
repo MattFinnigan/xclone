@@ -90,10 +90,12 @@ Post.associate = (models) => {
 Post.afterFind((model) => {
   const posts = Array.isArray(model) ? model : [model]
   posts.forEach(async (post) => {
-    post.dataValues.likes = await fetchPostLikes(post) 
-    post.dataValues.liked = post.dataValues.likes.some((like) => like.user_id === parseInt(temp.userId))
-    post.dataValues.reposts = await fetchReposts(post)
-    post.dataValues.reposted = post.dataValues.reposts.some((repost) => repost.user_id === parseInt(temp.userId))
+    if (post) {
+      post.dataValues.likes = await fetchPostLikes(post) 
+      post.dataValues.liked = post.dataValues.likes.some((like) => like.user_id === parseInt(temp.userId))
+      post.dataValues.reposts = await fetchReposts(post)
+      post.dataValues.reposted = post.dataValues.reposts.some((repost) => repost.user_id === parseInt(temp.userId))
+    }
   })
 })
 

@@ -3,3 +3,7 @@
   display: flex;
   position: relative;
 }
+
+.noBorder {
+  border: none;
+}

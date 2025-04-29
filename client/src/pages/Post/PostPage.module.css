@@ -21,6 +21,7 @@
 }
 
 .replyContainer {
+  border-top: 1px solid var(--borderColour);
   border-bottom: 1px solid var(--borderColour);
   padding: 8px 0;
 }

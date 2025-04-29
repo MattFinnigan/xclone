@@ -22,7 +22,8 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
     setShowExtra(!showExtra)
   }
 
-  const handleNavigate = (postId) => {
+  const handleNavigate = (e, postId) => {
+    e.stopPropagation()
     if (!navigatable) {
       return
     }
@@ -31,7 +32,7 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
 
   return (
     <>
-      <div className={[styles.post, navigatable ? styles.clickable : '', repost ? styles.repost : ''].join(' ')} onClick={(e) => { handleNavigate(post.id) }}>
+      <div className={[styles.post, navigatable ? styles.clickable : '', repost ? styles.repost : ''].join(' ')} onClick={(e) => { handleNavigate(e, post.id) }}>
         <div className={styles.postContainer}>
           <div className={styles.postHeader}>
             <div className={[styles.imageContainer, repost ? styles.smallImg : ''].join(' ')}>
@@ -69,7 +70,7 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
           {commenting && <div className={styles.threadLine} />}
           <div className={[styles.postContent, page ? styles.onPage : '', repost ? styles.repost : ''].join(' ')}>
             <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
-            {post.repost && <PostContent post={post.repost} context={'repost'} hideActions={true} navigateToPost={() => { handleNavigate(repost.id) }}/>}
+            {post.repost && <PostContent post={post.repost} context="repost" hideActions={true} navigateToPost={() => { navigateToPost(post.repost.id) }}/>}
           </div>
           {page && (
             <div className={styles.postDetails}>

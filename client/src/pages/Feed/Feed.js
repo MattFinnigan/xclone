@@ -75,8 +75,8 @@ function Feed() {
         </div>
         <div className={styles.feedPosts}>
           {loading && <Spinner />}
-          {!loading && currentPosts.map((post) => (
-            <Post key={post.id} post={post} context="feed" onPostUpdated={() => refreshSinglePost(post.id)} />
+          {!loading && currentPosts.map((post, i) => (
+            <Post key={post.id} styled={i === 0 && 'noBorder'} post={post} context="feed" onPostUpdated={() => refreshSinglePost(post.id)} />
           ))}
         </div>
       </div>

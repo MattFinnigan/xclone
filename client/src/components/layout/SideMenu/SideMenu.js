@@ -29,7 +29,9 @@ function SideMenu() {
     }}>
       <div className={styles.sideMenuHeader}>
         <div className={styles.logoContainer}>
-          <Icon name="logo" size="2.5em" maskSize="26px" colour="white" />
+          <a href='/'>
+          <Icon name="logo" size="1.7em" maskSize="28px" colour="white" />
+          </a>
         </div>
       </div>
       <div className={styles.sideMenuContent}>

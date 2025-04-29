@@ -2,9 +2,24 @@ import styles from './Modal.module.css'
 import { useModalDispatch } from '../../context/ModalContext'
 import Button from '../common/Button/Button'
 import Icon from '../common/Icon/Icon'
+import { useEffect } from 'react'
 
 function Modal({ header, content }) {
   const dispatch = useModalDispatch()
+
+  useEffect(() => {
+    document.addEventListener('keyup', handleKeyUp)
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
+
+  function handleKeyUp(e) {
+    if (e.key === 'Escape') {
+      hideModal()
+    }
+  }
+
   function hideModal() {
     dispatch({ type: null })
   }

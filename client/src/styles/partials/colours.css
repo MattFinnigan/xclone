@@ -10,6 +10,7 @@
 
   --primary: rgb(29, 155, 240);
   --primary-alt: rgba(29, 156, 240, 0.105);
+  --primary-light: rgba(29, 156, 240, 0.035);
   --secondary: rgb(29, 155, 240);
   --error: #FF3D71;
   --green: #00ba7c;

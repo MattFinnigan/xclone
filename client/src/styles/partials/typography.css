@@ -1,9 +1,9 @@
 :root {
+  --sFontSize: 13px;
   --mFontSize: 15px;
   --mlFontSize: 19px;
   --lFontSize: 20px;
   --xlFontSize: 31px;
-  --sFontSize: 13px;
   --fontWeightRegular: 500;
   --fontWeightBold: 700;
   --fontWeightBolder: 800;

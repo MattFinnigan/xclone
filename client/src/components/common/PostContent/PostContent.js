@@ -30,11 +30,19 @@ function PostContent({ post, context, toggleLike, deletePost, navigateToPost, ha
     navigateToPost(postId)
   }
 
+  const navigateToProfile = (e, userId) => {
+    e.stopPropagation()
+    if (!navigatable) {
+      return
+    }
+    window.location.href = '/user/' + userId
+  }
+
   return (
     <>
       <div className={[styles.post, navigatable ? styles.clickable : '', repost ? styles.repost : ''].join(' ')} onClick={(e) => { handleNavigate(e, post.id) }}>
         <div className={styles.postContainer}>
-          <div className={styles.postHeader}>
+          <div className={styles.postHeader} onClick={(e) => navigateToProfile(e, post.user_id)}>
             <div className={[styles.imageContainer, repost ? styles.smallImg : ''].join(' ')}>
               <img src={`/images/avatars/${post.user.avatar || 'default.png'}`} alt="User Avatar" />
             </div>

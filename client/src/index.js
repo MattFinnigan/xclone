@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals'
 import App from './App'
 import Feed from './pages/Feed/Feed.js'
 import PostPage from './pages/Post/PostPage.js'
+import Profile from './pages/Profile/Profile.js'
 import { ModalProvider } from './context/ModalContext'
 import { CurrentRouteProvider } from './context/RouteContext'
 import { CurrentUserProvider } from './context/CurrentUserContext'
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/post/:postId',
     element: <PostPage />
+  },
+  {
+    path: '/user/:userId',
+    element: <Profile/>
   }
 ])
 

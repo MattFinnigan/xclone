@@ -204,3 +204,15 @@ export const toggleLike = (postId) => {
     })
   })
 }
+
+// fetch user profile
+export const fetchUserProfile = (userId) => {
+  return new Promise((resolve, reject) => {
+    apiGet('/api/users/profile/' + userId).then((response) => {
+      console.log('fetchUserProfile', response)
+      resolve(response)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}

@@ -35,6 +35,7 @@
 .postHeader {
   position: relative;
   display: flex;
+  cursor: pointer;
 }
 
 .imageContainer {

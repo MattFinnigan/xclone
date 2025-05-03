@@ -36,3 +36,21 @@ exports.getUserById = async (req, res, next) => {
     res.status(500).json({ status: 'error', message: 'Error fetching user.' })
   }
 }
+
+exports.getProfile = async (req, res, next) => {
+  try {
+    const userId = req.params.userId
+    const user = await userService.getProfile(userId)
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'User not found.' })
+    }
+    res.status(200).json({
+      status: 'success',
+      data: user
+    })
+  }
+  catch (err) {
+    console.error(err)
+    res.status(500).json({ status: 'error', message: 'Error fetching user.' })
+  }
+}
